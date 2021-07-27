@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_connect"
+            app:destination="@+id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.main.MainFragment"
+        android:label="fragment_select"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_connect_imageFr"
+            app:destination="@+id/imageFragment" />
+        <action
+            android:id="@+id/action_connect_galleryFr"
+            app:destination="@+id/galleryFragment"/>
+        <action
+            android:id="@+id/action_connect_resultsFr"
+            app:destination="@+id/resultFragment"/>
+        <action
+            android:id="@+id/action_connect_settingsFr"
+            app:destination="@+id/settingsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.image.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image">
+        <action
+            android:id="@+id/action_connect"
+            app:destination="@+id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.gallery.GalleryFragment"
+        android:label="fragment_gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_connect"
+            app:destination="@+id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.results.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results">
+        <action
+            android:id="@+id/action_connect_detailsFR"
+            app:destination="@+id/detailsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.results.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="resultPath"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="uniqueId"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="faceId"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
+</navigation>

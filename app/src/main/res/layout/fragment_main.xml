@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/fragment_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="kz.tengrilab.facerecognitononlyphoto.main.MainFragment"
+    android:gravity="center"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/btnSetting"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="330dp"
+            android:background="@drawable/info_tile_background"
+            android:backgroundTint="#D1E6EB">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:src="@drawable/ic_settings" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/face" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <FrameLayout
+            android:id="@+id/btnImage"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/info_tile_background"
+            android:backgroundTint="#D1E6EB">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_camera"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="10dp"
+                android:text="Сделать фото"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnGallery"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/info_tile_background"
+            android:backgroundTint="#D1E6EB">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_gallery"/>
+
+            <TextView
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:gravity="end"
+                android:text="Выбрать с галереи"
+                android:textSize="16sp"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <FrameLayout
+            android:id="@+id/btnResults"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/info_tile_background"
+            android:backgroundTint="#D1E6EB">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_results"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:gravity="end"
+                android:text="Результаты"
+                android:textSize="16sp"/>
+
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
