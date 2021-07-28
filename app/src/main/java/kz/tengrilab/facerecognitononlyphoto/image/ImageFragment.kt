@@ -99,6 +99,46 @@ class ImageFragment : Fragment() {
         }
     }
 
+    private fun sendOriginal(path: String, uuid: UUID) {
+        Log.d("Test", "sendImage started")
+        //val file = File(path)
+        val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
+        val clientInterface = retrofit.create(SendImageInterface::class.java)
+
+        val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
+        val code = uuid.toString()
+        val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        val partCode = MultipartBody.Part.createFormData("code", code)
+
+        val call = clientInterface.uploadOrigin(Variables.headers2 + loadToken(), partFile, partCode)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val answer = response.code()
+                Log.d("Test", answer.toString())
+                if (response.body() != null) {
+                    Log.d("Test", response.body().toString())
+                    if (response.code() == 200) {
+                        StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+                        Log.d("Test", "response 200")
+                    }
+                }
+                if (response.code() == 401) {
+                    ImageFragmentDirections.actionConnect().apply {
+                        findNavController().navigate(this)
+                    }
+                    Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
+                    Log.d("Test", "response 401")
+                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("Test", "not sent")
+                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+            }
+        })
+    }
+
     private fun sendImage(path: String, uuid: UUID) {
         Log.d("Test", "sendImage started")
         //val file = File(path)
@@ -201,6 +241,7 @@ class ImageFragment : Fragment() {
             .addOnSuccessListener { faces ->
                 Log.d("Test", "size: $faces.size")
                 val uuid = UUID.randomUUID()
+                sendOriginal(stringPath, uuid)
                 for (face in faces) {
                     count += 1
                     //val bounds = face.boundingBox

@@ -18,6 +18,15 @@ interface SendImageInterface {
 
     @Multipart
     @Headers(Variables.headers)
+    @POST("/api/load-origin")
+    fun uploadOrigin(
+        @Header("Authorization") header: String,
+        @Part file: MultipartBody.Part,
+        @Part code: MultipartBody.Part
+    ): Call<ResponseBody>
+
+    @Multipart
+    @Headers(Variables.headers)
     @POST("/producer/detect-faces")
     fun uploadMultipleImage(
         @Header("Authorization") header: String,
