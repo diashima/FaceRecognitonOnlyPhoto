@@ -12,7 +12,7 @@ import java.io.FileOutputStream
 object GetProperImageFile {
     fun getRotatedImageFile(photoFile: File, context: Context?): File? {
         val option = BitmapFactory.Options()
-        option.inSampleSize = 4
+        option.inSampleSize = 1
 
         val convertedBitmap: Bitmap =
             modifyOrientation(

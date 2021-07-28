@@ -99,7 +99,7 @@ class ImageFragment : Fragment() {
         }
     }
 
-    private fun sendImage(path: String) {
+    private fun sendImage(path: String, uuid: UUID) {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
@@ -107,17 +107,17 @@ class ImageFragment : Fragment() {
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
+        val code = uuid.toString()
+        val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        val partCode = MultipartBody.Part.createFormData("code", code)
 
-        val part = MultipartBody.Part.createFormData("files", file.name, requestBody)
-        val partLat = MultipartBody.Part.createFormData("lat", "50")
-        val partLon = MultipartBody.Part.createFormData("lon", "50")
-
-        val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), part, partLat, partLon)
+        val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val answer = response.code()
                 Log.d("Test", answer.toString())
                 if (response.body() != null) {
+                    Log.d("Test", response.body().toString())
                     if (response.code() == 200) {
                         StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
                         Log.d("Test", "response 200")
@@ -179,7 +179,7 @@ class ImageFragment : Fragment() {
         return image
     }
 
-    private fun detectFaces(stringPath: String, context: Context) : String {
+    private fun detectFaces(stringPath: String, context: Context) {
         var uri = ""
         var sum = 1
         val path = Uri.fromFile(File(stringPath))
@@ -200,6 +200,7 @@ class ImageFragment : Fragment() {
         detector.process(image)
             .addOnSuccessListener { faces ->
                 Log.d("Test", "size: $faces.size")
+                val uuid = UUID.randomUUID()
                 for (face in faces) {
                     count += 1
                     //val bounds = face.boundingBox
@@ -220,22 +221,20 @@ class ImageFragment : Fragment() {
                         112,
                         true
                     )
-                    uri = saveImage(newBitmap)
+                    uri = saveImage(newBitmap, uuid, count)
                     Log.d("Test", "crop created: $count, uri: $uri")
-                    sendImage(uri)
+                    sendImage(uri, uuid)
                 }
             }
             .addOnFailureListener { e ->
                 Log.d("Test", "crop is NOT !!!!!!! created")
             }
-
-        return uri
     }
 
-    private fun saveImage(bitmap: Bitmap) : String {
+    private fun saveImage(bitmap: Bitmap, uuid: UUID, count: Int) : String {
         val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
 
-        val file = File(storageDirectory, "${UUID.randomUUID()}.jpg")
+        val file = File(storageDirectory, "$uuid-$count.jpg")
         Log.d("Test", file.toString())
         try {
             // Get the file output stream

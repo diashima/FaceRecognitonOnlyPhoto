@@ -9,12 +9,11 @@ import retrofit2.http.*
 interface SendImageInterface {
     @Multipart
     @Headers(Variables.headers)
-    @POST("/producer/detect-faces")
+    @POST("/api/load-crops")
     fun uploadImage(
         @Header("Authorization") header: String,
         @Part file: MultipartBody.Part,
-        @Part lat: MultipartBody.Part,
-        @Part lon: MultipartBody.Part?
+        @Part code: MultipartBody.Part
     ): Call<ResponseBody>
 
     @Multipart
