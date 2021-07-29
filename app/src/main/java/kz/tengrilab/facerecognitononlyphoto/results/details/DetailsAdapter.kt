@@ -20,7 +20,7 @@ class DetailsAdapter(private val items: List<Man>) : RecyclerView.Adapter<Detail
                 binding.textViewIIN.text = man.iin
                 binding.textViewUdNumber.text = man.udNumber
 
-                val url = Variables.url + Variables.port + "/files/udgrphotos/" + man.udNumber + ".jpg"
+                val url = Variables.url + Variables.port + "/files/udgrphotos/" + man.udNumber.toLong().toString() + ".ldr"
                 Picasso.get().load(url).into(binding.cropImageView)
             }
         }

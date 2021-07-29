@@ -160,7 +160,7 @@ class ImageFragment : Fragment() {
                     Log.d("Test", response.body().toString())
                     if (response.code() == 200) {
                         StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-                        Log.d("Test", "response 200")
+                        Log.d("Test", "crop response 200")
                     }
                 }
                 if (response.code() == 401) {
@@ -168,12 +168,12 @@ class ImageFragment : Fragment() {
                         findNavController().navigate(this)
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
-                    Log.d("Test", "response 401")
+                    Log.d("Test", "crop response 401")
                     TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("Test", "not sent")
+                Log.d("Test", "crop not sent")
                 StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
             }
         })

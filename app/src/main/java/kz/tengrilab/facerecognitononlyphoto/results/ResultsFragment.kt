@@ -45,13 +45,15 @@ class ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
         call.enqueue(object : Callback<Face> {
             override fun onResponse(call: Call<Face>, response: Response<Face>) {
                 Log.d("Test", response.body().toString())
-                val results = response.body()!!.results
-                key = results
-                Log.d("Test", results.toString())
-                binding.recyclerView.apply {
-                    setHasFixedSize(true)
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = ResultsAdapter(results, this@ResultsFragment)
+                if (response.body() != null) {
+                    val results = response.body()!!.results
+                    key = results
+                    Log.d("Test", results.toString())
+                    binding.recyclerView.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = ResultsAdapter(results, this@ResultsFragment)
+                    }
                 }
             }
 
@@ -66,8 +68,10 @@ class ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
         val uniqueId = key[position].uniqueId
         val faceId = key[position].faceId
         val imageUrl = key[position].imageLink
+        val photoPath = key[position].photoPath
+        val photoOriginal = key[position].photoOriginal
 
-        ResultsFragmentDirections.actionConnectDetailsFR(resultPath, uniqueId, faceId, imageUrl).apply {
+        ResultsFragmentDirections.actionConnectDetailsFR(resultPath, uniqueId, faceId, photoPath, photoOriginal).apply {
             findNavController().navigate(this)
         }
     }

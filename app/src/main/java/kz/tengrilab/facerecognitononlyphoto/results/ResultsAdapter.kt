@@ -37,7 +37,7 @@ class ResultsAdapter(private val items: List<Face.Result>, private val listener:
                 binding.textFaceId.text = this.faceId
                 binding.textImageUrl.text = this.imageLink
                 binding.textViewUniqueId.text = this.uniqueId
-                Picasso.get().load(this.imageLink).into(binding.imageViewCard)
+                Picasso.get().load(this.photoPath).into(binding.imageViewCard)
             }
         }
     }

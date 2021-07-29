@@ -82,7 +82,11 @@
             app:argType="string"
             app:nullable="false"/>
         <argument
-            android:name="imageUrl"
+            android:name="photoPath"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="photoOriginal"
             app:argType="string"
             app:nullable="false"/>
     </fragment>

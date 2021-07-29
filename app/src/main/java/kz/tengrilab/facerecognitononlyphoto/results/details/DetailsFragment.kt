@@ -35,8 +35,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val originalLink = "${Variables.url}${Variables.port}/files/crops/${args.resultPath}/${args.uniqueId}/original.jpg"
-        val cropLink = "${Variables.url}${Variables.port}/files/crops/${args.resultPath}/${args.uniqueId}/crop_${args.faceId}.jpg"
+        val originalLink = args.photoOriginal
+        val cropLink = args.photoPath
         Picasso.get().load(cropLink).into(binding.imageViewCrop)
         Picasso.get().load(originalLink).into(binding.imageViewOriginal)
         getDetails()
@@ -47,7 +47,7 @@ class DetailsFragment : Fragment() {
         val detailsInterface = retrofit.create(GetResultsInterface::class.java)
         val token = loadCredentials(requireActivity())
         val header = Variables.headers2
-
+        Log.d("Test", "get details started")
         val call = detailsInterface.getDetails(header + token, args.resultPath, args.uniqueId, args.faceId, top.toString())
         call.enqueue(object : Callback<List<Man>> {
             override fun onResponse(call: Call<List<Man>>, response: Response<List<Man>>) {
@@ -61,6 +61,7 @@ class DetailsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Man>>, t: Throwable) {
+                Log.d("Test", "fail")
                 Toast.makeText(requireContext(), "Соединение разорвано", Toast.LENGTH_LONG).show()
             }
         })

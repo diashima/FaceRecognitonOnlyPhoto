@@ -21,6 +21,10 @@ data class Face(
         val resultsPath: String,
         val timestamp: String,
         @SerializedName("unique_id")
-        val uniqueId: String
+        val uniqueId: String,
+        @SerializedName("photo_path")
+        val photoPath: String,
+        @SerializedName("photo_original")
+        val photoOriginal: String
     )
 }
