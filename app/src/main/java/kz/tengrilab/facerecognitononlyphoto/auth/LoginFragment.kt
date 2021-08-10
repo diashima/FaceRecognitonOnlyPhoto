@@ -75,7 +75,8 @@ class LoginFragment : Fragment() {
                     try {
                         val obj = JSONObject(body!!.string())
                         val token = obj.getString("token")
-                        saveCredentials(username, token)
+                        val userId = obj.getInt("user_id")
+                        saveCredentials(username, token, userId)
                         //val expiresIn = obj.getInt("expires_in")
                         //val expiresAt = obj.getString("expires_at")
                         Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_LONG).show()
@@ -101,11 +102,12 @@ class LoginFragment : Fragment() {
         })
     }
 
-    private fun saveCredentials(login: String, token: String) {
+    private fun saveCredentials(login: String, token: String, userId: Int) {
         val sharedPref = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
             putString(Variables.sharedPrefLogin, login)
             putString(Variables.sharedPrefToken, token)
+            putInt(Variables.sharedPredId, userId)
             apply()
         }
     }

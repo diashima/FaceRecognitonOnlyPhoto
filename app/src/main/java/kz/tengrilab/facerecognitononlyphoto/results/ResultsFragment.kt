@@ -67,7 +67,7 @@ class ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
         val resultPath = key[position].resultsPath
         val uniqueId = key[position].uniqueId
         val faceId = key[position].faceId
-        val imageUrl = key[position].imageLink
+        //val imageUrl = key[position].imageLink
         val photoPath = key[position].photoPath
         val photoOriginal = key[position].photoOriginal
 

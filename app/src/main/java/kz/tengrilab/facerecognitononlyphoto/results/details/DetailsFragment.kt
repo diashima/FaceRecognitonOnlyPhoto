@@ -35,8 +35,10 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val originalLink = args.photoOriginal
-        val cropLink = args.photoPath
+        //val originalLink = args.photoOriginal.replace("10.77.1.62", "10.77.6.62")
+        //val cropLink = args.photoPath.replace("10.77.1.62", "10.77.6.62")
+        val originalLink = "http://10.150.34.13:10150/" + args.photoOriginal
+        val cropLink = "http://10.150.34.13:10150/" + args.photoPath
         Picasso.get().load(cropLink).into(binding.imageViewCrop)
         Picasso.get().load(originalLink).into(binding.imageViewOriginal)
         getDetails()

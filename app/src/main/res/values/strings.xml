@@ -2,4 +2,13 @@
     <string name="app_name">Face Recognition</string>
     <string name="send">Отправить</string>
     <string name="empty_results">Результаты отсутствуют</string>
+    <string name="current_ip">Текущий IP-Адрес:</string>
+    <string name="default_ip">192.168.1.1</string>
+    <string name="edit">Изменить</string>
+    <string name="save">Сохранить</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="old_pass">Старый пароль</string>
+    <string name="new_pass">Новый пароль</string>
+    <string name="confirm_pass">Подтвердите пароль</string>
+    <string name="save_password_new">Сохранить пароль</string>
 </resources>
