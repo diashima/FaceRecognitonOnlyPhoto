@@ -44,6 +44,12 @@ class MainFragment : Fragment() {
                 findNavController().navigate(this)
             }
         }
+
+        binding.btnCarNumber.setOnClickListener {
+            MainFragmentDirections.actionConnectCarnumberFr().apply {
+                findNavController().navigate(this)
+            }
+        }
         binding.btnSetting.setOnClickListener {
             MainFragmentDirections.actionConnectSettingsFr().apply {
                 findNavController().navigate(this)

@@ -37,15 +37,15 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //val originalLink = args.photoOriginal.replace("10.77.1.62", "10.77.6.62")
         //val cropLink = args.photoPath.replace("10.77.1.62", "10.77.6.62")
-        val originalLink = "http://10.150.34.13:10150/" + args.photoOriginal
-        val cropLink = "http://10.150.34.13:10150/" + args.photoPath
+        val originalLink = Variables.url + Variables.port + args.photoOriginal
+        val cropLink = Variables.url + Variables.port + args.photoPath
         Picasso.get().load(cropLink).into(binding.imageViewCrop)
         Picasso.get().load(originalLink).into(binding.imageViewOriginal)
         getDetails()
     }
 
     private fun getDetails() {
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val detailsInterface = retrofit.create(GetResultsInterface::class.java)
         val token = loadCredentials(requireActivity())
         val header = Variables.headers2

@@ -5,53 +5,61 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="@string/current_ip"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <EditText
-        android:id="@+id/IPAddressText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/default_ip"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:clickable="false"/>
-
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:id="@+id/ipLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <Button
-            android:id="@+id/buttonEdit"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/edit" />
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/current_ip"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/IPAddressText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/save"
-            android:enabled="false"/>
+            android:layout_marginTop="25dp"
+            android:clickable="false"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/default_ip"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:text="@string/edit" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/save" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -69,7 +77,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/old_pass"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:minHeight="48dp"
             android:textColorHint="@color/white" />
 
@@ -79,7 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:minHeight="48dp"
             android:hint="@string/new_pass"
             android:textColorHint="@color/white"/>
@@ -91,17 +101,40 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:minHeight="48dp"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:hint="@string/confirm_pass"
             android:textColorHint="@color/white" />
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkbox"
+            android:text="@string/show_password"
+            android:textColor="@color/white"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="8dp"
+            />
 
         <Button
             android:id="@+id/buttonSavePass"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_password_new" />
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -110,12 +143,12 @@
 
         <Button
             android:id="@+id/buttonChange"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="25dp"
             android:text="@string/change_password" />
     </RelativeLayout>
 

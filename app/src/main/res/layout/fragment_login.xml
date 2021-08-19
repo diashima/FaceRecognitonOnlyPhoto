@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,7 @@
         android:id="@+id/inputUserName"
         android:layout_marginStart="16sp"
         android:layout_marginEnd="16sp"
-        android:hint="Input username"
+        android:hint="@string/login"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         />
@@ -26,14 +25,14 @@
         android:layout_marginStart="16sp"
         android:layout_marginEnd="16sp"
         android:layout_marginTop="16sp"
-        android:hint="Input password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Логин или пароль введены не верно"
+        android:text="@string/login_error"
         android:textColor="#FF0000"
         android:id="@+id/textViewUser"
         android:layout_marginStart="16sp"
@@ -45,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/checkbox"
-        android:text="Show password"
+        android:text="@string/show_password"
         android:layout_marginStart="16sp"
         android:layout_marginEnd="16sp"
         android:layout_marginTop="16sp"
@@ -58,6 +57,6 @@
         android:layout_marginTop="16sp"
         android:layout_marginStart="16sp"
         android:layout_marginEnd="16sp"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         />
 </LinearLayout>

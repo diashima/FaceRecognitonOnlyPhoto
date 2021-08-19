@@ -26,5 +26,5 @@ interface SettingsInterface {
         @Header("Authorization") header: String,
         @Path("id") id: Int,
         @Body body: RequestBody
-    ): Call<ResponseBody>
+    ): Call<ResponseBody?>
 }

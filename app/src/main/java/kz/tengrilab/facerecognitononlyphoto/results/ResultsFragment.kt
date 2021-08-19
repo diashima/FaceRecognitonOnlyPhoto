@@ -17,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
+class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
 
     private var _binding: FragmentResultsBinding? = null
     private val binding get() = _binding!!
@@ -36,9 +36,10 @@ class ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
     }
 
     private fun getResults() {
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val resultInterface = retrofit.create(GetResultsInterface::class.java)
         val token = loadCredentials(requireActivity())
+        Log.d("Test", token!!)
         val header = Variables.headers2
 
         val call = resultInterface.getResults(header + token, "1" )

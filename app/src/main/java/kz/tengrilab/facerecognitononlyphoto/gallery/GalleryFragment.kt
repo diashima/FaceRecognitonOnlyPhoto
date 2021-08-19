@@ -90,6 +90,7 @@ class GalleryFragment : Fragment() {
                 .addOnSuccessListener { faces ->
                     Log.d("Test", "size: $faces.size")
                     val uuid = UUID.randomUUID()
+                    //sendOriginal(path.toString(), uuid)
                     for (face in faces) {
                         count += 1
                         //val bounds = face.boundingBox
@@ -112,7 +113,7 @@ class GalleryFragment : Fragment() {
                         )
                         uri = saveImage(newBitmap, uuid, count)
                         Log.d("Test", "crop created: $count, uri: $uri")
-                        sendImage(uri)
+                        sendImage(uri, uuid)
                     }
                 }
                 .addOnFailureListener { e ->
@@ -144,20 +145,60 @@ class GalleryFragment : Fragment() {
         return file.absolutePath
     }
 
-    private fun sendImage(path: String) {
+
+    private fun sendOriginal(path: String, uuid: UUID) {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
+        val code = uuid.toString()
+        val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        val partCode = MultipartBody.Part.createFormData("code", code)
 
-        val part = MultipartBody.Part.createFormData("files", file.name, requestBody)
-        val partLat = MultipartBody.Part.createFormData("lat", "50")
-        val partLon = MultipartBody.Part.createFormData("lon", "50")
+        val call = clientInterface.uploadOrigin(Variables.headers2 + loadToken(), partFile, partCode)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val answer = response.code()
+                Log.d("Test", answer.toString())
+                if (response.body() != null) {
+                    Log.d("Test", response.body().toString())
+                    if (response.code() == 200) {
+                        StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+                        Log.d("Test", "response 200")
+                    }
+                }
+                if (response.code() == 401) {
+                    ImageFragmentDirections.actionConnect().apply {
+                        findNavController().navigate(this)
+                    }
+                    Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
+                    Log.d("Test", "response 401")
+                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("Test", "not sent")
+                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+            }
+        })
+    }
 
-        val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), part, partLat)
+    private fun sendImage(path: String, uuid: UUID) {
+        Log.d("Test", "sendImage started")
+        //val file = File(path)
+        val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val clientInterface = retrofit.create(SendImageInterface::class.java)
+
+        val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
+        val code = uuid.toString()
+        val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
+        val partCode = MultipartBody.Part.createFormData("code", code)
+
+        val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val answer = response.code()
@@ -187,7 +228,7 @@ class GalleryFragment : Fragment() {
     private fun sendImageOld(list: ArrayList<String>){
         Toast.makeText(requireContext(), "SEND", Toast.LENGTH_LONG).show()
         val token = Variables.loadCredentials(requireActivity())
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val imagesInterface = retrofit.create(SendImageInterface::class.java)
         val multipartArray = arrayOfNulls<MultipartBody.Part>(list.size)
         for (i in list.indices) {

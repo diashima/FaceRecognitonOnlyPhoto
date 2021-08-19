@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_connect_settingsFr"
             app:destination="@+id/settingsFragment"/>
+        <action
+            android:id="@+id/action_connect_carnumberFr"
+            app:destination="@+id/carNumberFragment"/>
     </fragment>
 
     <fragment
@@ -96,6 +99,16 @@
         android:name="kz.tengrilab.facerecognitononlyphoto.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_connect"
+            app:destination="@+id/mainFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/carNumberFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.carnumber.CarNumberFragment"
+        android:label="fragment_carnumber"
+        tools:layout="@layout/fragment_carnumber">
         <action
             android:id="@+id/action_connect"
             app:destination="@+id/mainFragment"/>

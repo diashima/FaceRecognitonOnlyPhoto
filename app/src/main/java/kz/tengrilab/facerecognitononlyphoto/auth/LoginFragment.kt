@@ -57,15 +57,17 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn(username: String, password: String) {
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val authInterface = retrofit.create(AuthInterface::class.java)
 
+        val deviceId = Variables.getDeviceId(requireContext())
+        Log.d("Test", deviceId)
         val body = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password)
+            .addFormDataPart("code", deviceId)
             .build()
-
         val call = authInterface.getUser(body)
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -79,7 +81,7 @@ class LoginFragment : Fragment() {
                         saveCredentials(username, token, userId)
                         //val expiresIn = obj.getInt("expires_in")
                         //val expiresAt = obj.getString("expires_at")
-                        Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_SHORT).show()
 
                         LoginFragmentDirections.actionConnect().apply {
                             findNavController().navigate(this)

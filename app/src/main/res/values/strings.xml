@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Face Recognition</string>
+    <string name="app_name">KÖREGEN</string>
     <string name="send">Отправить</string>
     <string name="empty_results">Результаты отсутствуют</string>
     <string name="current_ip">Текущий IP-Адрес:</string>
@@ -11,4 +11,17 @@
     <string name="new_pass">Новый пароль</string>
     <string name="confirm_pass">Подтвердите пароль</string>
     <string name="save_password_new">Сохранить пароль</string>
+    <string name="show_password">Показать пароль</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="login_error">Логин или пароль введены неверно</string>
+    <string name="sign_in">Войти</string>
+    <string name="textCarNumber">Введите номер автомобиля</string>
+    <string name="car_number_hint">001XXX01</string>
+    <string name="search">Поиск</string>
+    <string name="clear">Очистить</string>
+    <string name="make_photo">Сделать фото</string>
+    <string name="pick_photo">Выбрать фото</string>
+    <string name="car_find">Найти машину</string>
+    <string name="results">Результаты</string>
 </resources>

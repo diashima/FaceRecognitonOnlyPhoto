@@ -103,7 +103,7 @@ class ImageFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
@@ -143,7 +143,7 @@ class ImageFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient()
+        val retrofit = ApiClient.getRetrofitClient(requireContext())
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.data.Face
 import kz.tengrilab.facerecognitononlyphoto.databinding.ItemResultBinding
 
@@ -38,7 +39,7 @@ class ResultsAdapter(private val items: List<Face.Result>, private val listener:
                 binding.textImageUrl.text = this.imageLink
                 binding.textViewUniqueId.text = this.uniqueId
                 //Picasso.get().load(this.photoPath.replace("10.77.1.62", "10.77.6.62")).into(binding.imageViewCard)
-                Picasso.get().load("http://10.150.34.13:10150/"+this.photoPath).into(binding.imageViewCard)
+                Picasso.get().load(Variables.url + Variables.port + this.photoPath).into(binding.imageViewCard)
             }
         }
     }
