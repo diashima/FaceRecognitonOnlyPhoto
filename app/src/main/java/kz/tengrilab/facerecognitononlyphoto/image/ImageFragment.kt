@@ -21,7 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import com.muddzdev.styleabletoast.StyleableToast
+import io.github.muddz.styleabletoast.StyleableToast
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
 import kz.tengrilab.facerecognitononlyphoto.BuildConfig
 import kz.tengrilab.facerecognitononlyphoto.R
