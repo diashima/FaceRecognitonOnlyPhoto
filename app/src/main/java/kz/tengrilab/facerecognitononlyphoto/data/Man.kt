@@ -11,5 +11,7 @@ data class Man(
     val secondName: String,
     val surname: String,
     @SerializedName("ud_number")
-    val udNumber: String
+    val udNumber: String,
+    @SerializedName("is_have_car")
+    val isHaveCar: Boolean
 )

@@ -72,6 +72,9 @@
         android:name="kz.tengrilab.facerecognitononlyphoto.results.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/action_connect_carDetailsFr"
+            app:destination="@+id/carDetailsFragment"/>
         <argument
             android:name="resultPath"
             app:argType="string"
@@ -112,5 +115,16 @@
         <action
             android:id="@+id/action_connect"
             app:destination="@+id/mainFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/carDetailsFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.carnumber.CarDetailsFragment"
+        android:label="fragment_cardetails"
+        tools:layout="@layout/fragment_cardetails">
+        <argument
+            android:name="udNumber"
+            app:argType="string"
+            app:nullable="false"/>
     </fragment>
 </navigation>

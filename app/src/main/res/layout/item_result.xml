@@ -21,7 +21,7 @@
             android:layout_weight="5"
             android:layout_height="match_parent"
             android:id="@+id/imageViewCard"
-            android:src="@color/lightBlue"
+            android:src="@color/white"
             android:padding="2dp"
             />
         <TextView
@@ -29,39 +29,10 @@
             android:layout_width="0dp"
             android:layout_weight="5"
             android:layout_height="match_parent"
-            android:text="12-12-2020 00:00:00"
+            android:text="@string/test_datetime"
             android:gravity="center|center_horizontal"
             android:textSize="17sp"
-            android:textColor="@color/lightBlue"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewUniqueId"
-            android:textSize="15sp"
-            android:text="Distance"
-            android:visibility="gone"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textResultsPath"
-            android:textSize="15sp"
-            android:text="Distance"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textFaceId"
-            android:textSize="15sp"
-            android:text="Distance"
-            android:visibility="gone"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textImageUrl"
-            android:textSize="15sp"
-            android:text="Distance"
-            android:visibility="gone"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

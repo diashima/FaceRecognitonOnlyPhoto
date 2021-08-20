@@ -24,8 +24,6 @@ class ResultsAdapter(private val items: List<Face.Result>, private val listener:
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultsViewHolder {
-        //_binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        //return ResultsViewHolder(binding.root)
         val binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ResultsViewHolder(binding)
     }
@@ -34,10 +32,6 @@ class ResultsAdapter(private val items: List<Face.Result>, private val listener:
         with(holder){
             with(items[position]) {
                 binding.textDateTime.text = this.timestamp
-                binding.textResultsPath.text = this.resultsPath
-                binding.textFaceId.text = this.faceId
-                binding.textImageUrl.text = this.imageLink
-                binding.textViewUniqueId.text = this.uniqueId
                 //Picasso.get().load(this.photoPath.replace("10.77.1.62", "10.77.6.62")).into(binding.imageViewCard)
                 Picasso.get().load(Variables.url + Variables.port + this.photoPath).into(binding.imageViewCard)
             }

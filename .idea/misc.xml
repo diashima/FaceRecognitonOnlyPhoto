@@ -3,15 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable-v24/ic_gallery.xml" value="0.190625" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable-v24/ic_results.xml" value="0.190625" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable-v24/ic_settings.xml" value="0.190625" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable-v24/search.xml" value="0.3828125" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable/circle_btn.xml" value="0.3828125" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable/circle_layout.xml" value="0.3828125" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/drawable/pencil.xml" value="0.3828125" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_cardetails.xml" value="0.3596014492753623" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_carnumber.xml" value="0.3596014492753623" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_details.xml" value="0.3211050724637681" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_login.xml" value="0.32518115942028986" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_main.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_results.xml" value="0.3211050724637681" />
         <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/fragment_settings.xml" value="0.31929347826086957" />
-        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/item_detail.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/item_detail.xml" value="0.33" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/item_gallery.xml" value="0.3211050724637681" />
+        <entry key="..\:/Users/diashima/AndroidStudioProjects/FaceRecognitonOnlyPhoto/app/src/main/res/layout/item_result.xml" value="0.3211050724637681" />
       </map>
     </option>
   </component>

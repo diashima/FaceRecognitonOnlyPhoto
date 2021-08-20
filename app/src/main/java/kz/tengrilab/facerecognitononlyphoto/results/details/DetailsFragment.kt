@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
@@ -20,11 +21,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), DetailsAdapter.OnItemClickListener {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: DetailsFragmentArgs by navArgs()
+    private lateinit var details: List<Man>
     private val top = 10
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,11 +56,13 @@ class DetailsFragment : Fragment() {
         call.enqueue(object : Callback<List<Man>> {
             override fun onResponse(call: Call<List<Man>>, response: Response<List<Man>>) {
                 Log.d("Test", "TEST: ${response.body()} ")
-                val details = response.body()!!
-                binding.recyclerRecognition.apply {
-                    setHasFixedSize(true)
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = DetailsAdapter(details)
+                if (response.code() == 200) {
+                    details = response.body()!!
+                    binding.recyclerRecognition.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = DetailsAdapter(details, this@DetailsFragment)
+                    }
                 }
             }
 
@@ -67,5 +71,13 @@ class DetailsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Соединение разорвано", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    override fun onItemCLick(position: Int) {
+        val udNumber = details[position].udNumber
+
+        DetailsFragmentDirections.actionConnectCarDetailsFr(udNumber).apply {
+            findNavController().navigate(this)
+        }
     }
 }

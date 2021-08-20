@@ -3,108 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200sp"
+    android:layout_height="200dp"
     app:cardElevation="10dp"
     android:layout_margin="3dp"
     android:shape="ring"
     app:cardCornerRadius="10dp"
-    android:background="@color/background"
-    >
+    android:background="@color/background">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="10"
         android:background="@color/background">
+
         <ImageView
+            android:layout_marginStart="10dp"
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="match_parent"
             android:id="@+id/cropImageView"
-            android:src="@drawable/person_icon"
-            />
+            android:src="@drawable/person_icon" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginStart="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewSurname"
-                android:textSize="16sp"
-                android:text="Surname"
-                android:textColor="@color/lightBlue"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewFirstName"
-                android:textSize="16sp"
-                android:text="FirstName"
-                android:textColor="@color/lightBlue"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewSecondName"
-                android:textSize="16sp"
-                android:text="SecondName"
-                android:textColor="@color/lightBlue"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewIIN"
-                android:textSize="16sp"
-                android:text="IIN"
-                android:textColor="@color/lightBlue"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewUdNumber"
-                android:textSize="16sp"
-                android:text="Ud Number"
-                android:textColor="@color/lightBlue"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewDistance"
-                android:textSize="16sp"
-                android:text="Distance"
-                android:textColor="@color/lightBlue"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:visibility="gone"
+            android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout"
-            >
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/textName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewNoInfo"
-                android:text="Нету машины"
-                android:textSize="15sp"
-                android:layout_margin="5dp"
-                android:visibility="gone"
-                android:textColor="@color/lightBlue"/>
+                android:layout_marginTop="10dp"
+                android:text="@string/fio"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textIin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/iin"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textUdNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ud_number"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distance"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textNoCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_car"
+                android:textSize="16sp"
+                android:visibility="visible"
+                android:textColor="@color/white"/>
 
             <Button
-                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_marginTop="15dp"
+                android:textSize="12sp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnCarNumber"
-                android:text="Показать"
-                android:layout_margin="5dp"
-                />
-        </LinearLayout>
+                android:id="@+id/btnShowCars"
+                android:text="@string/show" />
 
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
