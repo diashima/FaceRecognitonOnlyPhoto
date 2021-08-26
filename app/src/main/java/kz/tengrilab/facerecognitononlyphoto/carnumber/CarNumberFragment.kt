@@ -45,6 +45,27 @@ class CarNumberFragment : Fragment() {
         call.enqueue(object : Callback<CarDetail> {
             override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
                 Log.d("Test", response.body().toString())
+                if (response.code() == 200) {
+                    val result = response.body()!!.data
+                    binding.carInputLayout.visibility = View.GONE
+                    binding.tableCar.visibility = View.VISIBLE
+                    if (result.fiz != null) {
+                        binding.tableCitizen.visibility = View.VISIBLE
+                        binding.textSurname.text = result.fiz.lastname
+                        binding.textFirstName.text = result.fiz.firstname
+                        binding.textSecondName.text = result.fiz.secondname
+                        binding.textIn.text = result.fiz.gr_code
+                        binding.textUd.text = result.fiz.ud_code
+                        //binding.textLicense.text
+                        //binding.textDateLicense.text
+                    }
+                    binding.textGrnz.text = result.car_number
+                    binding.textCarModel.text = result.car_model
+                    binding.textCarYear.text = result.car_year
+                    binding.textVin.text = result.vin
+                    binding.textTechPass.text = result.teh_passport
+                    binding.textDateTechPass.text = result.teh_passport_date
+                }
             }
 
             override fun onFailure(call: Call<CarDetail>, t: Throwable) {

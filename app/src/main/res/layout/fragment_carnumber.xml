@@ -1,101 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:text="@string/textCarNumber"
-        android:textColor="@color/white"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/circle_layout"
-        android:orientation="horizontal"
-        android:textColor="@color/white"
-        android:layout_marginTop="20dp"
-        android:weightSum="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/carInputLayout">
 
-        <EditText
-            android:id="@+id/editCarInfo"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="10"
-            android:background="@color/background"
-            android:hint="@string/car_number_hint"
-            android:fontFamily="serif"
-            android:inputType="textCapCharacters"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:text="@string/textCarNumber"
             android:textColor="@color/white"
-            android:maxLength="9"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-            android:textColorHint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:focusable="true"
-            android:textColorHighlight="@color/white"
-            />
+            android:textSize="23sp" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/circle_layout"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <EditText
+                android:id="@+id/editCarInfo"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="10"
+                android:background="@color/background"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+                android:focusable="true"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:hint="@string/car_number_hint"
+                android:inputType="textCapCharacters"
+                android:maxLength="9"
+                android:textColor="@color/white"
+                android:textColorHint="@color/background2"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/buttonSearch"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/circle_btn"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textStyle="normal" />
     </LinearLayout>
 
-
-
-    <Button
-        android:id="@+id/buttonSearch"
-        android:layout_width="0dp"
+    <TableLayout
+        android:id="@+id/tableCitizen"
+        android:visibility="gone"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:background="@drawable/circle_btn"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/search"
-        android:textColor="@color/white"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:id="@+id/buttonClear"
-        android:layout_width="0dp"
+        android:layout_marginTop="10dp">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/surname" />
+            <TextView
+                android:id="@+id/textSurname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/first_name" />
+            <TextView
+                android:id="@+id/textFirstName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/second_name" />
+            <TextView
+                android:id="@+id/textSecondName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/iiin" />
+            <TextView
+                android:id="@+id/textIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/ud_number_detail" />
+            <TextView
+                android:id="@+id/textUd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/driver_license" />
+            <TextView
+                android:id="@+id/textLicense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/date_license" />
+            <TextView
+                android:id="@+id/textDateLicense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/tableCar"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:background="@drawable/circle_btn"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginTop="30sp"
-        android:text="@string/clear"
-        android:textColor="@color/white"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"/>
+        android:layout_marginTop="10dp">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/grnz" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textGrnz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/car_model" />
+
+            <TextView
+                android:id="@+id/textCarModel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/car_year" />
+
+            <TextView
+                android:id="@+id/textCarYear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/vin" />
+
+            <TextView
+                android:id="@+id/textVin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/technical_passport" />
+            <TextView
+                android:id="@+id/textTechPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/date_tech_pass" />
+            <TextView
+                android:id="@+id/textDateTechPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:text="@string/Test" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

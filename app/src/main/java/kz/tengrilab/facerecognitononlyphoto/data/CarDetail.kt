@@ -25,7 +25,7 @@ data class CarDetail(
             val gr_code: String,
             val id: Int,
             val lastname: String,
-            val secondname: Any,
+            val secondname: String?,
             val ud_code: String,
             val udcode_last: Any,
             val uddate: String,

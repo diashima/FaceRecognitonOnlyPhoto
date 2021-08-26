@@ -33,4 +33,18 @@
     <string name="show">Показать автомобиль</string>
     <string name="original_photo">Оригинальное изображение</string>
     <string name="crop_photo">Обрезанное лицо</string>
+    <string name="surname">Фамилия</string>
+    <string name="Test">Тест</string>
+    <string name="first_name">Имя</string>
+    <string name="second_name">Отчество</string>
+    <string name="iiin">ИИН</string>
+    <string name="ud_number_detail">Номер уд. личности</string>
+    <string name="grnz">ГРНЗ</string>
+    <string name="car_model">Модель авто</string>
+    <string name="car_year">Год выпуска</string>
+    <string name="vin">VIN-код</string>
+    <string name="driver_license">Серия вод. удостоверения</string>
+    <string name="date_license">Срок действия вод. удостоверения</string>
+    <string name="technical_passport">Серия тех. паспорта</string>
+    <string name="date_tech_pass">Дата выдачи тех. паспорта</string>
 </resources>
