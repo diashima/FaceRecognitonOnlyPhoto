@@ -69,6 +69,16 @@
             android:textStyle="normal" />
     </LinearLayout>
 
+    <ImageView
+        android:visibility="gone"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/imagePerson"
+        android:src="@drawable/person_icon" />
+
     <TableLayout
         android:id="@+id/tableCitizen"
         android:visibility="gone"
@@ -350,4 +360,15 @@
                 android:text="@string/Test" />
         </TableRow>
     </TableLayout>
+    <Button
+        android:id="@+id/buttonClear"
+        android:visibility="gone"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/circle_btn"
+        android:text="@string/clear"
+        android:textColor="@color/white"
+        android:textStyle="normal" />
 </LinearLayout>

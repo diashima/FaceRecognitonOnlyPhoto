@@ -19,7 +19,6 @@
     <string name="textCarNumber">Введите номер автомобиля</string>
     <string name="car_number_hint">001XXX01</string>
     <string name="search">Поиск</string>
-    <string name="clear">Очистить</string>
     <string name="make_photo">Сделать фото</string>
     <string name="pick_photo">Выбрать фото</string>
     <string name="car_find">Найти машину</string>
@@ -47,4 +46,5 @@
     <string name="date_license">Срок действия вод. удостоверения</string>
     <string name="technical_passport">Серия тех. паспорта</string>
     <string name="date_tech_pass">Дата выдачи тех. паспорта</string>
+    <string name="clear">Очистить</string>
 </resources>

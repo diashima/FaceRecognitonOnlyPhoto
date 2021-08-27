@@ -8,8 +8,15 @@ import retrofit2.http.*
 interface GetCarDetailsInterface {
     @Headers(Variables.headers)
     @GET("/api/get-car-info")
-    fun uploadImage(
+    fun sendCarNumber(
         @Header("Authorization") header: String,
         @Query("car_number") carNumber: String,
+    ): Call<CarDetail>
+
+    @Headers(Variables.headers)
+    @GET("/api/get-person-info")
+    fun sendPersonIin(
+        @Header("Authorization") header: String,
+        @Query("iin") carNumber: String,
     ): Call<CarDetail>
 }

@@ -27,7 +27,8 @@ class DetailsAdapter(private val items: List<Man>, private val listener: Details
                     binding.textNoCar.visibility = View.GONE
                     binding.btnShowCars.visibility = View.VISIBLE
                 }
-                val url = Variables.url + Variables.port + "/files/udgrphotos/" + man.udNumber.toLong().toString() + ".ldr"
+                val url = Variables.imageUrl + Variables.port + "/files/udgrphotos/" + man.udNumber + ".ldr"
+                //val url = Variables.url + Variables.port + "/files/udgrphotos/" + man.udNumber.toLong().toString() + ".ldr"
                 Picasso.get().load(url).into(binding.cropImageView)
             }
         }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.squareup.picasso.Picasso
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetail
@@ -35,13 +36,22 @@ class CarNumberFragment : Fragment() {
         binding.buttonSearch.setOnClickListener {
             searchCarNumber()
         }
+
+        binding.buttonClear.setOnClickListener {
+            binding.editCarInfo.text.clear()
+            binding.carInputLayout.visibility = View.VISIBLE
+            binding.tableCar.visibility = View.GONE
+            binding.tableCitizen.visibility = View.GONE
+            binding.buttonClear.visibility = View.GONE
+            binding.imagePerson.visibility = View.GONE
+        }
     }
 
     private fun searchCarNumber() {
         val retrofit = ApiClient.getRetrofitClient(requireContext())
         val clientInterface = retrofit.create(GetCarDetailsInterface::class.java)
 
-        val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), binding.editCarInfo.text.toString())
+        val call = clientInterface.sendCarNumber(Variables.headers2 + loadToken(), binding.editCarInfo.text.toString())
         call.enqueue(object : Callback<CarDetail> {
             override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
                 Log.d("Test", response.body().toString())
@@ -49,13 +59,18 @@ class CarNumberFragment : Fragment() {
                     val result = response.body()!!.data
                     binding.carInputLayout.visibility = View.GONE
                     binding.tableCar.visibility = View.VISIBLE
+                    binding.buttonClear.visibility = View.VISIBLE
                     if (result.fiz != null) {
                         binding.tableCitizen.visibility = View.VISIBLE
+                        binding.imagePerson.visibility = View.VISIBLE
                         binding.textSurname.text = result.fiz.lastname
                         binding.textFirstName.text = result.fiz.firstname
                         binding.textSecondName.text = result.fiz.secondname
                         binding.textIn.text = result.fiz.gr_code
                         binding.textUd.text = result.fiz.ud_code
+                        val url = Variables.imageUrl + Variables.port + "/files/udgrphotos/" + result.fiz.ud_code + ".ldr"
+                        //val url = Variables.url + Variables.port + "/files/udgrphotos/" + result.fiz.ud_code.toLong().toString() + ".ldr"
+                        Picasso.get().load(url).into(binding.imagePerson)
                         //binding.textLicense.text
                         //binding.textDateLicense.text
                     }
