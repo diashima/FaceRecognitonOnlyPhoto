@@ -23,7 +23,7 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
     private var _binding: FragmentResultsBinding? = null
     private val binding get() = _binding!!
     private lateinit var key: List<Face.Result>
-    private val resultList = App.resultList
+    //private val resultList = App.resultList
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -33,14 +33,14 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Test", "result list cache: $resultList.toString()")
-        if (resultList != null) {
+        //Log.d("Test", "result list cache: $resultList.toString()")
+        /*if (resultList != null) {
             binding.recyclerView.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 adapter = ResultsAdapter(resultList,this@ResultsFragment)
             }
-        }
+        }*/
         getResults()
     }
 
@@ -56,16 +56,22 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
             override fun onResponse(call: Call<Face>, response: Response<Face>) {
                 Log.d("Test", response.body().toString())
                 if (response.body() != null) {
+                    binding.progressBar.visibility = View.GONE
                     key = response.body()!!.results
                     Log.d("Test", key.toString())
-                    if (key.size != resultList?.size) {
+                    binding.recyclerView.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = ResultsAdapter(key, this@ResultsFragment)
+                    }
+                    /*if (key.size != resultList?.size) {
                         App.resultList = key
                         binding.recyclerView.apply {
                             setHasFixedSize(true)
                             layoutManager = LinearLayoutManager(context)
                             adapter = ResultsAdapter(key, this@ResultsFragment)
                         }
-                    }
+                    }*/
                 }
             }
 

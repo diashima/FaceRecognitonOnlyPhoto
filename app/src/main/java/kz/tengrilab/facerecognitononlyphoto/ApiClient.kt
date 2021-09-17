@@ -12,16 +12,17 @@ import java.util.concurrent.TimeUnit
 object ApiClient {
 
     private lateinit var retrofit: Retrofit
-    private const val cacheSize = (10 * 1024 * 1024).toLong()
+    //private const val cacheSize = (10 * 1024 * 1024).toLong()
 
 
     fun getRetrofitClient() : Retrofit {
-        val myCache = Cache(App.ctx!!.cacheDir, cacheSize)
+
         //val ip = loadIp(context)
-        /*val okHttpClient = OkHttpClient.Builder()
+        val okHttpClient = OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
-            .build()*/
+            .build()
+        /*val myCache = Cache(App.ctx!!.cacheDir, cacheSize)
         val okHttpClient = OkHttpClient.Builder()
             .cache(myCache)
             .addInterceptor { chain ->
@@ -32,7 +33,7 @@ object ApiClient {
                     request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
                 chain.proceed(request)
             }
-            .build()
+            .build()*/
 
         retrofit = Retrofit.Builder()
             .baseUrl(Variables.url + Variables.port)
