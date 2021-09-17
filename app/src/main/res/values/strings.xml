@@ -47,4 +47,5 @@
     <string name="technical_passport">Серия тех. паспорта</string>
     <string name="date_tech_pass">Дата выдачи тех. паспорта</string>
     <string name="clear">Очистить</string>
+    <string name="save_login">Сохранить логин</string>
 </resources>

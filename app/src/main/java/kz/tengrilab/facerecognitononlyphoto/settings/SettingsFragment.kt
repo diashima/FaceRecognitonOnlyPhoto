@@ -67,7 +67,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.buttonSavePass.setOnClickListener {
-            val retrofit = ApiClient.getRetrofitClient(requireContext())
+            val retrofit = ApiClient.getRetrofitClient()
             val settingsInterface = retrofit.create(SettingsInterface::class.java)
 
             val body = MultipartBody.Builder()
@@ -121,7 +121,7 @@ class SettingsFragment : Fragment() {
 
     private fun loadId() : Int {
         val sharedPreferences = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE)!!
-        return sharedPreferences.getInt(Variables.sharedPredId, 0)
+        return sharedPreferences.getInt(Variables.sharedPrefId, 0)
     }
 
     private fun loadToken() : String? {

@@ -103,7 +103,7 @@ class ImageFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
@@ -127,9 +127,7 @@ class ImageFragment : Fragment() {
                     ImageFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
-                    Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
                     Log.d("Test", "response 401")
-                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -143,7 +141,7 @@ class ImageFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
@@ -169,7 +167,6 @@ class ImageFragment : Fragment() {
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
                     Log.d("Test", "crop response 401")
-                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

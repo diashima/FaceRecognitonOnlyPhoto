@@ -28,7 +28,6 @@ import kz.tengrilab.facerecognitononlyphoto.R
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentGalleryBinding
 import kz.tengrilab.facerecognitononlyphoto.image.GetProperImageFile
-import kz.tengrilab.facerecognitononlyphoto.image.ImageFragmentDirections
 import kz.tengrilab.facerecognitononlyphoto.image.SendImageInterface
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -90,7 +89,7 @@ class GalleryFragment : Fragment() {
                 .addOnSuccessListener { faces ->
                     Log.d("Test", "size: $faces.size")
                     val uuid = UUID.randomUUID()
-                    //sendOriginal(path.toString(), uuid)
+                    sendOriginal(stringPath, uuid)
                     for (face in faces) {
                         count += 1
                         //val bounds = face.boundingBox
@@ -150,7 +149,7 @@ class GalleryFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
@@ -171,12 +170,11 @@ class GalleryFragment : Fragment() {
                     }
                 }
                 if (response.code() == 401) {
-                    ImageFragmentDirections.actionConnect().apply {
+                    GalleryFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
                     Log.d("Test", "response 401")
-                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -190,7 +188,7 @@ class GalleryFragment : Fragment() {
         Log.d("Test", "sendImage started")
         //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
 
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
@@ -210,12 +208,11 @@ class GalleryFragment : Fragment() {
                     }
                 }
                 if (response.code() == 401) {
-                    ImageFragmentDirections.actionConnect().apply {
+                    GalleryFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
                     Log.d("Test", "response 401")
-                    TODO("startActivity(new Intent(getApplicationContext(), AuthRetryActivity.class));")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -228,7 +225,7 @@ class GalleryFragment : Fragment() {
     private fun sendImageOld(list: ArrayList<String>){
         Toast.makeText(requireContext(), "SEND", Toast.LENGTH_LONG).show()
         val token = Variables.loadCredentials(requireActivity())
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val imagesInterface = retrofit.create(SendImageInterface::class.java)
         val multipartArray = arrayOfNulls<MultipartBody.Part>(list.size)
         for (i in list.indices) {

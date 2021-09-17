@@ -17,7 +17,6 @@ import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentLoginBinding
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
-import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +37,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (isSavedLogin()) {
+            binding.inputUserName.setText(getLogin())
+            binding.checkbox2.isChecked = true
+        }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked)
@@ -46,18 +49,26 @@ class LoginFragment : Fragment() {
                 binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
         }
 
+
         binding.btnAuth.setOnClickListener {
             val uName = binding.inputUserName.text.toString()
             val uPass = binding.inputPassword.text.toString()
             if (uName == "" || uPass == "")
                 Toast.makeText(requireContext(), "Empty", Toast.LENGTH_LONG).show()
-            else
+            else {
+                if (binding.checkbox2.isChecked) {
+                    saveLogin(true)
+                } else {
+                    saveLogin(false)
+                }
                 signIn(uName, uPass)
+            }
+
         }
     }
 
     private fun signIn(username: String, password: String) {
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val authInterface = retrofit.create(AuthInterface::class.java)
 
         val deviceId = Variables.getDeviceId(requireContext())
@@ -73,22 +84,18 @@ class LoginFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("Test", response.toString())
                 if (response.code() == 200) {
-                    val body = response.body()
-                    try {
-                        val obj = JSONObject(body!!.string())
+                    if (response.body() != null) {
+                        val answer = response.body()
+                        val obj = JSONObject(answer!!.string())
                         val token = obj.getString("token")
                         val userId = obj.getInt("user_id")
-                        saveCredentials(username, token, userId)
-                        //val expiresIn = obj.getInt("expires_in")
-                        //val expiresAt = obj.getString("expires_at")
-                        Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_SHORT).show()
 
+                        saveCredentials(username, token, userId)
+
+                        Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_SHORT).show()
                         LoginFragmentDirections.actionConnect().apply {
                             findNavController().navigate(this)
                         }
-                    }
-                    catch (e: JSONException) {
-                        e.printStackTrace()
                     }
                 }
                 else if (response.code() == 404) {
@@ -109,8 +116,26 @@ class LoginFragment : Fragment() {
         with (sharedPref.edit()) {
             putString(Variables.sharedPrefLogin, login)
             putString(Variables.sharedPrefToken, token)
-            putInt(Variables.sharedPredId, userId)
+            putInt(Variables.sharedPrefId, userId)
             apply()
         }
+    }
+
+    private fun saveLogin(boolean: Boolean) {
+        val sharedPref = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean(Variables.saveLogin, boolean)
+            apply()
+        }
+    }
+
+    private fun isSavedLogin() : Boolean {
+        val sharedPreferences = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE)!!
+        return sharedPreferences.getBoolean(Variables.saveLogin, false)
+    }
+
+    private fun getLogin() : String? {
+        val sharedPreferences = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE)!!
+        return sharedPreferences.getString(Variables.sharedPrefLogin, "")
     }
 }

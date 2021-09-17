@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="230dp"
+    android:layout_height="210dp"
     app:cardElevation="10dp"
     android:layout_margin="3dp"
     android:shape="ring"
@@ -14,74 +14,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="10"
         android:background="@color/background">
 
-        <ImageView
-            android:layout_marginStart="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="match_parent"
-            android:id="@+id/cropImageView"
-            android:src="@drawable/person_icon" />
-
         <LinearLayout
-            android:layout_weight="6"
-            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="15dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textName"
+                android:id="@+id/textNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/fio"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textIin"
+                android:id="@+id/textCarModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/iin"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textUdNumber"
+                android:id="@+id/textCarYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ud_number"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textDistance"
+                android:id="@+id/textVin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distance"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
-
+                android:textSize="20sp" />
             <TextView
-                android:id="@+id/textNoCar"
+                android:id="@+id/textTechPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_car"
-                android:textSize="16sp"
-                android:visibility="visible"
-                android:textColor="@color/white"/>
-
-            <Button
-                android:visibility="gone"
-                android:layout_marginTop="15dp"
-                android:textSize="12sp"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnShowCars"
-                android:text="@string/show" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -43,11 +43,12 @@ class DetailsFragment : Fragment(), DetailsAdapter.OnItemClickListener {
         val cropLink = Variables.url + Variables.port + args.photoPath
         Picasso.get().load(cropLink).into(binding.imageViewCrop)
         Picasso.get().load(originalLink).into(binding.imageViewOriginal)
+        binding.progressBar.visibility = View.VISIBLE
         getDetails()
     }
 
     private fun getDetails() {
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val detailsInterface = retrofit.create(GetResultsInterface::class.java)
         val token = loadCredentials(requireActivity())
         val header = Variables.headers2
@@ -57,6 +58,7 @@ class DetailsFragment : Fragment(), DetailsAdapter.OnItemClickListener {
             override fun onResponse(call: Call<List<Man>>, response: Response<List<Man>>) {
                 Log.d("Test", "TEST: ${response.body()} ")
                 if (response.code() == 200) {
+                    binding.progressBar.visibility = View.GONE
                     details = response.body()!!
                     binding.recyclerRecognition.apply {
                         setHasFixedSize(true)
@@ -74,7 +76,7 @@ class DetailsFragment : Fragment(), DetailsAdapter.OnItemClickListener {
     }
 
     override fun onItemCLick(position: Int) {
-        val udNumber = details[position].udNumber
+        val udNumber = details[position].iin
 
         DetailsFragmentDirections.actionConnectCarDetailsFr(udNumber).apply {
             findNavController().navigate(this)

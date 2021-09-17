@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
+import kz.tengrilab.facerecognitononlyphoto.App
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.Variables.loadCredentials
 import kz.tengrilab.facerecognitononlyphoto.data.Face
@@ -22,6 +23,7 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
     private var _binding: FragmentResultsBinding? = null
     private val binding get() = _binding!!
     private lateinit var key: List<Face.Result>
+    private val resultList = App.resultList
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -31,12 +33,19 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("Test", "result list cache: $resultList.toString()")
+        if (resultList != null) {
+            binding.recyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = ResultsAdapter(resultList,this@ResultsFragment)
+            }
+        }
         getResults()
     }
 
     private fun getResults() {
-        val retrofit = ApiClient.getRetrofitClient(requireContext())
+        val retrofit = ApiClient.getRetrofitClient()
         val resultInterface = retrofit.create(GetResultsInterface::class.java)
         val token = loadCredentials(requireActivity())
         Log.d("Test", token!!)
@@ -47,13 +56,15 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
             override fun onResponse(call: Call<Face>, response: Response<Face>) {
                 Log.d("Test", response.body().toString())
                 if (response.body() != null) {
-                    val results = response.body()!!.results
-                    key = results
-                    Log.d("Test", results.toString())
-                    binding.recyclerView.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = ResultsAdapter(results, this@ResultsFragment)
+                    key = response.body()!!.results
+                    Log.d("Test", key.toString())
+                    if (key.size != resultList?.size) {
+                        App.resultList = key
+                        binding.recyclerView.apply {
+                            setHasFixedSize(true)
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = ResultsAdapter(key, this@ResultsFragment)
+                        }
                     }
                 }
             }

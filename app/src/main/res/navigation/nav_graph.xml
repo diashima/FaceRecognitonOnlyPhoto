@@ -119,7 +119,7 @@
 
     <fragment
         android:id="@+id/carDetailsFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.carnumber.CarDetailsFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.results.details.CarDetailsFragment"
         android:label="fragment_cardetails"
         tools:layout="@layout/fragment_cardetails">
         <argument
