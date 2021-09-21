@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentActivity
 
 object Variables {
     //const val imageUrl = "http://10.150.34.13"
-    //const val url = "http://10.150.34.13"
-    const val url = "http://10.77.6.62"
+    const val url = "http://10.150.34.13"
+    //const val url = "http://10.77.6.62"
     //const val imageUrl = "http://10.77.6.62"
     //const val url = "http://10.180.13.32"
     const val port = ":10150"

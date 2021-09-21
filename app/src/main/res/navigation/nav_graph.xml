@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_connect_detailsFR"
             app:destination="@+id/detailsFragment"/>
+        <action
+            android:id="@+id/action_connect_mainFR"
+            app:destination="@+id/mainFragment"/>
     </fragment>
 
     <fragment
@@ -103,7 +106,7 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/action_connect"
+            android:id="@+id/action_connect_mainFR"
             app:destination="@+id/mainFragment"/>
     </fragment>
 
@@ -113,7 +116,7 @@
         android:label="fragment_carnumber"
         tools:layout="@layout/fragment_carnumber">
         <action
-            android:id="@+id/action_connect"
+            android:id="@+id/action_connect_mainFR"
             app:destination="@+id/mainFragment"/>
     </fragment>
 
@@ -122,6 +125,9 @@
         android:name="kz.tengrilab.facerecognitononlyphoto.results.details.CarDetailsFragment"
         android:label="fragment_cardetails"
         tools:layout="@layout/fragment_cardetails">
+        <action
+            android:id="@+id/action_connect_mainFR"
+            app:destination="@+id/mainFragment"/>
         <argument
             android:name="udNumber"
             app:argType="string"

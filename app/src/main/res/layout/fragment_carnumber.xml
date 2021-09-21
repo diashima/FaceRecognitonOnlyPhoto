@@ -15,6 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:text="@string/textCarNumber"
             android:textColor="@color/white"
             android:textSize="23sp" />
@@ -73,6 +79,16 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/circle_btn"
             android:text="@string/search"
+            android:textColor="@color/white"
+            android:textStyle="normal" />
+        <Button
+            android:id="@+id/buttonMakePhoto"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/circle_btn"
+            android:text="@string/make_photo"
             android:textColor="@color/white"
             android:textStyle="normal" />
     </LinearLayout>

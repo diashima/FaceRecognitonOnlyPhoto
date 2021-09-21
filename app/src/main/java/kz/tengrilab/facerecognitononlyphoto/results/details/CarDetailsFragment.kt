@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
@@ -16,6 +17,7 @@ import kz.tengrilab.facerecognitononlyphoto.carnumber.CarAdapter
 import kz.tengrilab.facerecognitononlyphoto.carnumber.GetCarDetailsInterface
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetailByIin
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentCardetailsBinding
+import kz.tengrilab.facerecognitononlyphoto.showSnack
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,6 +74,12 @@ class CarDetailsFragment : Fragment() {
                             layoutManager = LinearLayoutManager(context)
                             adapter = CarAdapter(carList)
                         }
+                    }
+                }
+                else {
+                    showSnack("")
+                    CarDetailsFragmentDirections.actionConnectMainFR().apply {
+                        findNavController().navigate(this)
                     }
                 }
             }
