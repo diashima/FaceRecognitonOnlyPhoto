@@ -177,6 +177,9 @@ class GalleryFragment : Fragment() {
                 Log.d("Test", "crop response: ${response.code()}")
                 if (response.code() == 200) {
                     if (response.body() != null) {
+                        GalleryFragmentDirections.actionConnect().apply {
+                            findNavController().navigate(this)
+                        }
                         Log.d("Test", response.body().toString())
                         StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
                     }

@@ -54,25 +54,27 @@ class DetailsFromResultFragment : Fragment() {
                     val result = response.body()!!.data
                     val obj = JSONObject(result.response)
                     val jsonFiz = obj.getString("fiz")
-                    val fiz = JSONObject(jsonFiz)
+
                     binding.tableCar.visibility = View.VISIBLE
                     if (obj.getString("car_number_type") == "iur") {
                         binding.tableIur.visibility = View.VISIBLE
                         binding.textIur.text = obj.getString("iur")
                     }
                     if (obj.getString("car_number_type") == "FIZ") {
-                        binding.tableCitizen.visibility = View.VISIBLE
-                        binding.imagePerson.visibility = View.VISIBLE
-                        binding.textSurname.text = fiz.getString("lastname")
-                        binding.textFirstName.text = fiz.getString("firstname")
-                        binding.textSecondName.text = fiz.getString("secondname")
-                        binding.textIn.text = fiz.getString("gr_code")
-                        binding.textUd.text = fiz.getString("ud_code")
-                        binding.textLicense.text = obj.getString("vu_serial")
-                        binding.textDateLicense.text = obj.getString("vu_end")
-                        //val url = Variables.imageUrl + Variables.port + "/files/udgrphotos/" + result.fiz.ud_code + ".ldr"
-                        val url = Variables.url + Variables.port + "/files/udgrphotos/" + fiz.getString("ud_code").toLong().toString() + ".ldr"
-                        Picasso.get().load(url).into(binding.imagePerson)
+                        if (jsonFiz != "null") {
+                            val fiz = JSONObject(jsonFiz)
+                            binding.textSurname.text = fiz.getString("lastname")
+                            binding.textFirstName.text = fiz.getString("firstname")
+                            binding.textSecondName.text = fiz.getString("secondname")
+                            binding.textIn.text = fiz.getString("gr_code")
+                            binding.textUd.text = fiz.getString("ud_code")
+                            val url = Variables.url + Variables.port + "/files/udgrphotos/" + fiz.getString("ud_code").toLong().toString() + ".ldr"
+                            Picasso.get().load(url).into(binding.imagePerson)
+                            binding.tableCitizen.visibility = View.VISIBLE
+                            binding.imagePerson.visibility = View.VISIBLE
+                            binding.textLicense.text = obj.getString("vu_serial")
+                            binding.textDateLicense.text = obj.getString("vu_end")
+                        }
                     }
                     binding.textGrnz.text = obj.getString("car_number")
                     binding.textCarModel.text = obj.getString("car_model")
@@ -80,7 +82,7 @@ class DetailsFromResultFragment : Fragment() {
                     binding.textVin.text = obj.getString("vin")
                     binding.textTechPass.text = obj.getString("teh_passport")
                     binding.textDateTechPass.text = obj.getString("teh_passport_date")
-                } else if (response.code() == 404) {
+                } else {
                     StyleableToast.makeText(requireContext(), "Автомобиль отсутствует", Toast.LENGTH_LONG, R.style.mytoast2).show()
                 }
             }

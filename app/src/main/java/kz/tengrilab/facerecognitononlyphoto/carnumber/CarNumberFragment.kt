@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
@@ -22,8 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.face.FaceDetection
-import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.squareup.picasso.Picasso
@@ -32,15 +29,11 @@ import kz.tengrilab.facerecognitononlyphoto.*
 import kz.tengrilab.facerecognitononlyphoto.data.CarCrop
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetail
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentCarnumberBinding
-import kz.tengrilab.facerecognitononlyphoto.gallery.GalleryAdapter
 import kz.tengrilab.facerecognitononlyphoto.gallery.GalleryFragment
 import kz.tengrilab.facerecognitononlyphoto.image.GetProperImageFile
-import kz.tengrilab.facerecognitononlyphoto.image.ImageFragmentDirections
 import kz.tengrilab.facerecognitononlyphoto.image.SendImageInterface
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -85,7 +78,11 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSearch.setOnClickListener {
-            searchCarNumber()
+            if (binding.editCarInfo.text.toString() == "") {
+                StyleableToast.makeText(requireContext(), "Введите номер", Toast.LENGTH_LONG, R.style.mytoast2).show()
+            } else {
+                searchCarNumber()
+            }
         }
 
         binding.buttonMakePhoto.setOnClickListener {
@@ -121,7 +118,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
             if (file.exists()) {
                 detectFaces(postPath, requireContext())
             } else {
-                ImageFragmentDirections.actionConnect().apply {
+                CarNumberFragmentDirections.actionConnectMainFR().apply {
                     findNavController().navigate(this)
                 }
             }
@@ -309,7 +306,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                         }
                     }
                 } else if (response.code() == 401) {
-                    ImageFragmentDirections.actionConnect().apply {
+                    CarNumberFragmentDirections.actionConnectMainFR().apply {
                         findNavController().navigate(this)
                     }
                     showSnack("Войдите в аккаунт")
@@ -341,7 +338,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                         Log.d("Test", response.body().toString())
                     }
                 } else if (response.code() == 401) {
-                    ImageFragmentDirections.actionConnect().apply {
+                    CarNumberFragmentDirections.actionConnectMainFR().apply {
                         findNavController().navigate(this)
                     }
                     showSnack("Войдите в аккаунт")
