@@ -44,7 +44,6 @@ import java.util.*
 class ImageFragment : Fragment() {
 
     private var mImageFileLocation = ""
-    private val CAMERA_PIC_REQUEST = 1111
     private lateinit var postPath: String
     private lateinit var fileUri: Uri
 
@@ -114,13 +113,11 @@ class ImageFragment : Fragment() {
         val call = clientInterface.uploadOrigin(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val answer = response.code()
-                Log.d("Test", answer.toString())
                 if (response.body() != null) {
                     Log.d("Test", response.body().toString())
                     if (response.code() == 200) {
-                        StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-                        Log.d("Test", "response 200")
+                        //StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+                        Log.d("Test", "original photo response 200")
                     }
                 }
                 if (response.code() == 401) {
@@ -139,7 +136,6 @@ class ImageFragment : Fragment() {
 
     private fun sendImage(path: String, uuid: UUID) {
         Log.d("Test", "sendImage started")
-        //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
         val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
@@ -152,8 +148,6 @@ class ImageFragment : Fragment() {
         val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val answer = response.code()
-                Log.d("Test", answer.toString())
                 if (response.body() != null) {
                     Log.d("Test", response.body().toString())
                     if (response.code() == 200) {
@@ -198,7 +192,7 @@ class ImageFragment : Fragment() {
         val timestamp = SimpleDateFormat("yyyy_MM_dd_HHmmSS", Locale.getDefault()).format(Date())
         val imageFileName = "IMAGE_$timestamp"
 
-        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
+        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "koregen_face")
 
         //val storageDirectory = getAppSpecificAlbumStorageDir(requireContext(), "${R.string.app_name}")
 
@@ -269,7 +263,7 @@ class ImageFragment : Fragment() {
     }
 
     private fun saveImage(bitmap: Bitmap, uuid: UUID, count: Int) : String {
-        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
+        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "koregen_face")
 
         val file = File(storageDirectory, "$uuid-$count.jpg")
         Log.d("Test", file.toString())
@@ -304,5 +298,9 @@ class ImageFragment : Fragment() {
     private fun loadToken() : String? {
         val sharedPreferences = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE)!!
         return sharedPreferences.getString(Variables.sharedPrefToken, null)
+    }
+
+    companion object {
+        const val CAMERA_PIC_REQUEST = 1111
     }
 }

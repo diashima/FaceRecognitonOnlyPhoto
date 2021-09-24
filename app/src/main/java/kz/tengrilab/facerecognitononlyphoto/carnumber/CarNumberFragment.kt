@@ -1,5 +1,6 @@
 package kz.tengrilab.facerecognitononlyphoto.carnumber
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,6 +33,7 @@ import kz.tengrilab.facerecognitononlyphoto.data.CarCrop
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetail
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentCarnumberBinding
 import kz.tengrilab.facerecognitononlyphoto.gallery.GalleryAdapter
+import kz.tengrilab.facerecognitononlyphoto.gallery.GalleryFragment
 import kz.tengrilab.facerecognitononlyphoto.image.GetProperImageFile
 import kz.tengrilab.facerecognitononlyphoto.image.ImageFragmentDirections
 import kz.tengrilab.facerecognitononlyphoto.image.SendImageInterface
@@ -52,13 +55,19 @@ import java.util.*
 
 class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
 
+    companion object {
+        const val PICK_IMAGE_MULTIPLE = 1
+        const val CAMERA_PIC_REQUEST = 1111
+    }
+
     private var mImageFileLocation = ""
-    private val CAMERA_PIC_REQUEST = 1111
+
     private lateinit var postPath: String
     private val list = ArrayList<CarCrop>()
     private var cropCount = 0
     private var answerCount = 0
-
+    lateinit var imagePath: String
+    private val pathList = ArrayList<String>()
 
     private var _binding: FragmentCarnumberBinding? = null
     private val binding get() = _binding!!
@@ -83,6 +92,15 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
             captureImage()
         }
 
+        binding.buttonGallery.setOnClickListener {
+            pickImage()
+        }
+
+        binding.buttonResults.setOnClickListener {
+            CarNumberFragmentDirections.actionConnectResultCarFr().apply {
+                findNavController().navigate(this)
+            }
+        }
         binding.buttonClear.setOnClickListener {
             binding.editCarInfo.text.clear()
             binding.carInputLayout.visibility = View.VISIBLE
@@ -90,6 +108,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
             binding.tableCitizen.visibility = View.GONE
             binding.buttonClear.visibility = View.GONE
             binding.imagePerson.visibility = View.GONE
+            binding.tableIur.visibility = View.GONE
         }
     }
 
@@ -106,6 +125,21 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                     findNavController().navigate(this)
                 }
             }
+        } else if (requestCode == GalleryFragment.PICK_IMAGE_MULTIPLE && resultCode == Activity.RESULT_OK
+            && null != data) {
+            if (data.clipData != null) {
+                Log.d("Test", "Clip data: ${data.clipData.toString()}")
+                val count = data.clipData!!.itemCount
+                Log.d("Test", count.toString())
+                for (i in 0 until count) {
+                    val imageUri: Uri = data.clipData!!.getItemAt(i).uri
+                    getPathFromURI(imageUri)
+                }
+            } else if (data.data != null) {
+                val imagePath = data.data!!
+                getPathFromURI(imagePath)
+                Log.d("Test", imagePath.toString());
+            }
         }
     }
 
@@ -117,13 +151,17 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
         val call = clientInterface.sendCarNumber(Variables.headers2 + loadToken(), binding.editCarInfo.text.toString())
         call.enqueue(object : Callback<CarDetail> {
             override fun onResponse(call: Call<CarDetail>, response: Response<CarDetail>) {
+                binding.progressBar.visibility = View.GONE
                 Log.d("Test", response.body().toString())
                 if (response.code() == 200) {
                     val result = response.body()!!.data
-                    binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.GONE
                     binding.tableCar.visibility = View.VISIBLE
                     binding.buttonClear.visibility = View.VISIBLE
+                    if (result.car_number_type == "iur") {
+                        binding.tableIur.visibility = View.VISIBLE
+                        binding.textIur.text = result.iur
+                    }
                     if (result.fiz != null) {
                         binding.tableCitizen.visibility = View.VISIBLE
                         binding.imagePerson.visibility = View.VISIBLE
@@ -146,9 +184,10 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                     binding.textDateTechPass.text = result.teh_passport_date
                 } else if (response.code() == 404) {
                     StyleableToast.makeText(requireContext(), "Автомобиль отсутствует", Toast.LENGTH_LONG, R.style.mytoast2).show()
-                    CarNumberFragmentDirections.actionConnectMainFR().apply {
-                        findNavController().navigate(this)
-                    }
+                    binding.carInputLayout.visibility = View.VISIBLE
+                    binding.chooseLabel.visibility = View.GONE
+                    binding.recyclerView.adapter = null
+                    binding.editCarInfo.setText("")
                 }
             }
 
@@ -178,12 +217,12 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
     private fun createImageFile() : File {
         val timestamp = SimpleDateFormat("yyyy_MM_dd_HHmmSS", Locale.getDefault()).format(Date())
         val imageFileName = "IMAGE_$timestamp"
-        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
+        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "koregen_car")
         if (!storageDirectory.exists()){
             storageDirectory.mkdir()
             Log.d("Test", "Creating directory")
         } else {
-            Log.d("Test", "Directory exists!!!")
+            Log.d("Test", "Directory exists!")
         }
         val image = File(storageDirectory, "$imageFileName.jpg")
         mImageFileLocation = image.absolutePath
@@ -226,7 +265,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
     }
 
     private fun saveImage(bitmap: Bitmap, uuid: UUID, count: Int) : String {
-        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
+        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "koregen_car")
         val file = File(storageDirectory, "$uuid-$count.jpg")
         Log.d("Test", file.toString())
         try {
@@ -238,46 +277,6 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
             e.printStackTrace()
         }
         return file.absolutePath
-    }
-
-    private fun testSendCrops(path: String, uuid: UUID) {
-        val builder = MultipartBody
-            .Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("code", uuid.toString())
-
-        for (i in 0..list.size) {
-            val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-            builder.addFormDataPart("file[]", file?.name, RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file!!))
-        }
-
-        //val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
-        val retrofit = ApiClient.getRetrofitClient()
-        val clientInterface = retrofit.create(SendImageInterface::class.java)
-        //val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
-        //val code = uuid.toString()
-        //val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
-        //val partCode = MultipartBody.Part.createFormData("code", code)
-        val requestBody = builder.build()
-        val call = clientInterface.uploadAllCarCrops(Variables.headers2 + loadToken(), requestBody)
-        call.enqueue(object : Callback<List<CarCrop>> {
-            override fun onResponse(call: Call<List<CarCrop>>, response: Response<List<CarCrop>>) {
-                Log.d("Test", "crop code: ${response.code()}")
-                if (response.code() == 200) {
-                    if (response.body() != null) {
-                        Log.d("Test", response.body().toString())
-                    }
-                } else if (response.code() == 401) {
-                    ImageFragmentDirections.actionConnect().apply {
-                        findNavController().navigate(this)
-                    }
-                    showSnack("Войдите в аккаунт")
-                }
-            }
-            override fun onFailure(call: Call<List<CarCrop>>, t: Throwable) {
-                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-            }
-        })
     }
 
     private fun sendCrop(path: String, uuid: UUID) {
@@ -295,26 +294,31 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                 Log.d("Test", "crop code: ${response.code()}")
                 if (response.code() == 200) {
                     if (response.body() != null) {
+                        StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
                         Log.d("Test", response.body().toString())
                         list.add(CarCrop(response.body()!!.number, response.body()!!.url))
+                        if (answerCount == cropCount) {
+                            binding.chooseLabel.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.VISIBLE
+                            binding.recyclerView.apply {
+                                Log.d("Test", list.toString())
+                                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                                adapter = CarCropAdapter(list, this@CarNumberFragment)
+                            }
+                            binding.editCarInfo.setText(list[0].number)
+                        }
                     }
                 } else if (response.code() == 401) {
                     ImageFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
                     showSnack("Войдите в аккаунт")
-                }
-                if (answerCount == cropCount) {
-                    binding.recyclerView.visibility = View.VISIBLE
-                    binding.recyclerView.apply {
-                        Log.d("Test", list.toString())
-                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = CarCropAdapter(list, this@CarNumberFragment)
-                    }
+                } else {
+                    StyleableToast.makeText(requireContext(), "Не распознаны номера", Toast.LENGTH_LONG, R.style.mytoast2).show()
                 }
             }
             override fun onFailure(call: Call<CarCrop>, t: Throwable) {
-                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast2).show()
             }
         })
     }
@@ -344,7 +348,7 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
+
             }
         })
     }
@@ -367,4 +371,53 @@ class CarNumberFragment : Fragment(), CarCropAdapter.OnItemClickListener {
     override fun onItemCLick(position: Int) {
         binding.editCarInfo.setText(list[position].number)
     }
+
+    private fun pickImage(){
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+        startActivityForResult(intent, GalleryFragment.PICK_IMAGE_MULTIPLE)
+    }
+
+    private fun getPathFromURI(uri: Uri) {
+        var path: String = uri.path!! // uri = any content Uri
+
+        val databaseUri: Uri
+        val selection: String?
+        val selectionArgs: Array<String>?
+        if (path.contains("/document/image:")) { // files selected from "Documents"
+            databaseUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            selection = "_id=?"
+            selectionArgs = arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1])
+        } else { // files selected from all other sources, especially on Samsung devices
+            databaseUri = uri
+            selection = null
+            selectionArgs = null
+        }
+        try {
+            val projection = arrayOf(
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.ORIENTATION,
+                MediaStore.Images.Media.DATE_TAKEN
+            ) // some example data you can query
+            val cursor = requireContext().contentResolver.query(
+                databaseUri,
+                projection, selection, selectionArgs, null
+            )
+            if (cursor!!.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(projection[0])
+                imagePath = cursor.getString(columnIndex)
+                // Log.e("path", imagePath);
+                pathList.add(imagePath)
+                detectFaces(imagePath, requireContext())
+            }
+            cursor.close()
+        } catch (e: Exception) {
+            Log.e("Test", e.message, e)
+        }
+    }
+
+
 }

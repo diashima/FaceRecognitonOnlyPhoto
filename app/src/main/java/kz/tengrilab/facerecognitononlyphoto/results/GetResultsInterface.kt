@@ -3,11 +3,13 @@ package kz.tengrilab.facerecognitononlyphoto.results
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.data.Face
 import kz.tengrilab.facerecognitononlyphoto.data.Man
+import kz.tengrilab.facerecognitononlyphoto.data.Params
+import kz.tengrilab.facerecognitononlyphoto.data.ResultCar
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface GetResultsInterface {
     @Headers(Variables.headers)
@@ -26,4 +28,13 @@ interface GetResultsInterface {
         @Query("face_id") faceId: String,
         @Query("top") top: String
     ) : Call<List<Man>>
+
+
+    @Headers(Variables.headers)
+    @POST("/api/car-info-search")
+    fun getCarResults(
+        @Header("Authorization") header: String,
+        @Query("page_size") pageSize: Int,
+        @Query("page") page: Int
+    ) : Call<ResultCar>
 }

@@ -67,7 +67,6 @@ class GalleryFragment : Fragment() {
         }
     }
 
-
     private fun detectFaces(list: ArrayList<String>, context: Context){
         val options = FaceDetectorOptions.Builder()
             .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
@@ -79,7 +78,6 @@ class GalleryFragment : Fragment() {
         val detector = FaceDetection.getClient(options)
         for (stringPath in list) {
             var uri = ""
-            var sum = 1
             val path = Uri.fromFile(File(stringPath))
             val bitmap = getCapturedImage(path, context)
             val image = InputImage.fromFilePath(context, path)
@@ -92,8 +90,6 @@ class GalleryFragment : Fragment() {
                     sendOriginal(stringPath, uuid)
                     for (face in faces) {
                         count += 1
-                        //val bounds = face.boundingBox
-                        //val rotY = face.headEulerAngleY // Head is rotated to the right rotY degrees
                         val rotZ = face.headEulerAngleZ // Head is tilted sideways rotZ degrees
                         val faceBitmap = Bitmap
                             .createBitmap(
@@ -112,7 +108,7 @@ class GalleryFragment : Fragment() {
                         )
                         uri = saveImage(newBitmap, uuid, count)
                         Log.d("Test", "crop created: $count, uri: $uri")
-                        sendImage(uri, uuid)
+                        sendCrop(uri, uuid)
                     }
                 }
                 .addOnFailureListener { e ->
@@ -122,59 +118,42 @@ class GalleryFragment : Fragment() {
     }
 
     private fun saveImage(bitmap: Bitmap, uuid: UUID, count: Int) : String {
-        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "final")
-
+        val storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/" + "koregen_face")
         val file = File(storageDirectory, "$uuid-$count.jpg")
         Log.d("Test", file.toString())
         try {
-            // Get the file output stream
             val stream: OutputStream = FileOutputStream(file)
-
-            // Compress bitmap
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-
-            // Flush the stream
             stream.flush()
-
-            // Close stream
             stream.close()
-        } catch (e: IOException){ // Catch the exception
+        } catch (e: IOException){
             e.printStackTrace()
         }
         return file.absolutePath
     }
 
-
     private fun sendOriginal(path: String, uuid: UUID) {
-        Log.d("Test", "sendImage started")
-        //val file = File(path)
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
         val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
-
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
         val code = uuid.toString()
         val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
         val partCode = MultipartBody.Part.createFormData("code", code)
-
         val call = clientInterface.uploadOrigin(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val answer = response.code()
-                Log.d("Test", answer.toString())
-                if (response.body() != null) {
-                    Log.d("Test", response.body().toString())
-                    if (response.code() == 200) {
+                Log.d("Test", "original photo response: ${response.code()}")
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.d("Test", response.body().toString())
                         StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-                        Log.d("Test", "response 200")
                     }
-                }
-                if (response.code() == 401) {
+                } else if (response.code() == 401) {
                     GalleryFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
-                    Log.d("Test", "response 401")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -184,73 +163,34 @@ class GalleryFragment : Fragment() {
         })
     }
 
-    private fun sendImage(path: String, uuid: UUID) {
-        Log.d("Test", "sendImage started")
-        //val file = File(path)
+    private fun sendCrop(path: String, uuid: UUID) {
         val file = GetProperImageFile.getRotatedImageFile(File(path), requireContext())
         val retrofit = ApiClient.getRetrofitClient()
         val clientInterface = retrofit.create(SendImageInterface::class.java)
-
         val requestBody = file!!.asRequestBody("*/*".toMediaTypeOrNull())
         val code = uuid.toString()
         val partFile = MultipartBody.Part.createFormData("file", file.name, requestBody)
         val partCode = MultipartBody.Part.createFormData("code", code)
-
         val call = clientInterface.uploadImage(Variables.headers2 + loadToken(), partFile, partCode)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val answer = response.code()
-                Log.d("Test", answer.toString())
-                if (response.body() != null) {
-                    if (response.code() == 200) {
+                Log.d("Test", "crop response: ${response.code()}")
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.d("Test", response.body().toString())
                         StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-                        Log.d("Test", "response 200")
                     }
-                }
-                if (response.code() == 401) {
+                } else if (response.code() == 401) {
                     GalleryFragmentDirections.actionConnect().apply {
                         findNavController().navigate(this)
                     }
                     Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
-                    Log.d("Test", "response 401")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("Test", "not sent")
+                Log.d("Test", "crop not sent")
                 StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
             }
-        })
-    }
-
-    private fun sendImageOld(list: ArrayList<String>){
-        Toast.makeText(requireContext(), "SEND", Toast.LENGTH_LONG).show()
-        val token = Variables.loadCredentials(requireActivity())
-        val retrofit = ApiClient.getRetrofitClient()
-        val imagesInterface = retrofit.create(SendImageInterface::class.java)
-        val multipartArray = arrayOfNulls<MultipartBody.Part>(list.size)
-        for (i in list.indices) {
-            val file = File(list[i])
-            val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-            multipartArray[i] = MultipartBody.Part.createFormData("files", file.name, requestBody)
-        }
-        val call = imagesInterface.uploadMultipleImage(Variables.headers2 + token, multipartArray)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                when(response.code()){
-                    200 -> StyleableToast.makeText(requireContext(), "Отправлено", Toast.LENGTH_LONG, R.style.mytoast).show()
-                    401 -> {
-                        GalleryFragmentDirections.actionConnect().apply {
-                            findNavController().navigate(this)
-                        }
-                        StyleableToast.makeText(requireContext(), "Войдите в аккаунт", Toast.LENGTH_LONG, R.style.mytoast2).show()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                StyleableToast.makeText(requireContext(), "Не отправлено", Toast.LENGTH_LONG, R.style.mytoast2).show()
-            }
-
         })
     }
 
@@ -261,7 +201,6 @@ class GalleryFragment : Fragment() {
         intent.type = "image/*"
         startActivityForResult(intent, PICK_IMAGE_MULTIPLE)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -285,6 +224,10 @@ class GalleryFragment : Fragment() {
                 Log.d("Test", list.toString())
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = GalleryAdapter(list)
+            }
+        } else {
+            GalleryFragmentDirections.actionConnect().apply {
+                findNavController().navigate(this)
             }
         }
     }
@@ -341,7 +284,7 @@ class GalleryFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(Variables.sharedPrefLogin, Context.MODE_PRIVATE)!!
         return sharedPreferences.getString(Variables.sharedPrefToken, null)
     }
-
+    
     companion object {
         const val PICK_IMAGE_MULTIPLE = 1
     }

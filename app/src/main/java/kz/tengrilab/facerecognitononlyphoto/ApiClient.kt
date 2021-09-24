@@ -22,18 +22,6 @@ object ApiClient {
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build()
-        /*val myCache = Cache(App.ctx!!.cacheDir, cacheSize)
-        val okHttpClient = OkHttpClient.Builder()
-            .cache(myCache)
-            .addInterceptor { chain ->
-                var request = chain.request()
-                request = if (hasNetwork(App.ctx!!)!!)
-                    request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
-                else
-                    request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
-                chain.proceed(request)
-            }
-            .build()*/
 
         retrofit = Retrofit.Builder()
             .baseUrl(Variables.url + Variables.port)
@@ -42,15 +30,6 @@ object ApiClient {
             .build()
 
         return retrofit
-    }
-
-    private fun hasNetwork(context: Context): Boolean? {
-        var isConnected: Boolean? = false // Initial Value
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-        if (activeNetwork != null && activeNetwork.isConnected)
-            isConnected = true
-        return isConnected
     }
 
     /*private fun loadIp(context: Context) : String? {

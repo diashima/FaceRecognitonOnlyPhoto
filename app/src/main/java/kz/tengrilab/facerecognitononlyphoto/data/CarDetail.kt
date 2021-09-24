@@ -12,7 +12,7 @@ data class CarDetail(
         val car_year: String,
         val fiz: Fiz?,
         val grcode: String,
-        val iur: Any,
+        val iur: String,
         val teh_passport: String,
         val teh_passport_date: String,
         val vin: String,

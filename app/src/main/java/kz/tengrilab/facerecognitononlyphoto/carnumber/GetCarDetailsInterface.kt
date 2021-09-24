@@ -2,6 +2,7 @@ package kz.tengrilab.facerecognitononlyphoto.carnumber
 
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetail
+import kz.tengrilab.facerecognitononlyphoto.data.CarDetailById
 import kz.tengrilab.facerecognitononlyphoto.data.CarDetailByIin
 import retrofit2.Call
 import retrofit2.http.*
@@ -20,4 +21,11 @@ interface GetCarDetailsInterface {
         @Header("Authorization") header: String,
         @Query("iin") carNumber: String,
     ): Call<CarDetailByIin>
+
+    @Headers(Variables.headers)
+    @GET("/api/get-requested-car-info")
+    fun sendCarId(
+        @Header("Authorization") header: String,
+        @Query("id") id: Int,
+    ): Call<CarDetailById>
 }

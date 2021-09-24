@@ -6,12 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
+import io.github.muddz.styleabletoast.StyleableToast
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
+import kz.tengrilab.facerecognitononlyphoto.R
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.carnumber.CarAdapter
 import kz.tengrilab.facerecognitononlyphoto.carnumber.GetCarDetailsInterface
@@ -21,6 +24,7 @@ import kz.tengrilab.facerecognitononlyphoto.showSnack
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class CarDetailsFragment : Fragment() {
 
@@ -51,33 +55,43 @@ class CarDetailsFragment : Fragment() {
         val call = clientInterface.sendPersonIin(Variables.headers2 + loadToken(), args.udNumber)
         call.enqueue(object : Callback<CarDetailByIin> {
             override fun onResponse(call: Call<CarDetailByIin>, response: Response<CarDetailByIin>) {
+                binding.progressBar.visibility = View.GONE
                 Log.d("Test", response.code().toString())
                 if (response.code() == 200) {
-                    binding.progressBar.visibility = View.GONE
                     if (response.body() != null) {
                         val carList = response.body()!!.data.car_info
                         Log.d("Test", carList.toString())
                         val result = response.body()!!
-                        binding.tableCitizen.visibility = View.VISIBLE
-                        binding.imagePerson.visibility = View.VISIBLE
-                        binding.textSurname.text = result.data.lastname
-                        binding.textFirstName.text = result.data.firstname
-                        binding.textSecondName.text = result.data.secondname
-                        binding.textIn.text = result.data.gr_code
-                        binding.textUd.text = result.data.ud_code
-                        binding.textLicense.text = result.data.car_info[0].vu_serial
-                        binding.textDateLicense.text = result.data.car_info[0].vu_serial
-                        //val url = Variables.imageUrl + Variables.port + "/files/udgrphotos/" + result.data.ud_code + ".ldr"
-                        val url = Variables.url + Variables.port + "/files/udgrphotos/" + result.data.ud_code.toLong().toString() + ".ldr"
-                        Picasso.get().load(url).into(binding.imagePerson)
-                        binding.recycler.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = CarAdapter(carList)
+                        try {
+                            binding.tableCitizen.visibility = View.VISIBLE
+                            binding.imagePerson.visibility = View.VISIBLE
+                            binding.textSurname.text = result.data.lastname
+                            binding.textFirstName.text = result.data.firstname
+                            binding.textSecondName.text = result.data.secondname
+                            binding.textIn.text = result.data.gr_code
+                            binding.textUd.text = result.data.ud_code
+                            binding.textLicense.text = result.data.car_info?.get(0)?.vu_serial
+                            binding.textDateLicense.text = result.data.car_info?.get(0)?.vu_end
+                            //val url = Variables.imageUrl + Variables.port + "/files/udgrphotos/" + result.data.ud_code + ".ldr"
+                            val url = Variables.url + Variables.port + "/files/udgrphotos/" + result.data.ud_code.toLong().toString() + ".ldr"
+                            Picasso.get().load(url).into(binding.imagePerson)
+                            binding.recycler.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter = CarAdapter(carList!!)
+                            }
+
+                        } catch (e: IOException) {
+                            Log.d("Test", e.toString())
+                            StyleableToast.makeText(requireContext(), "Ошибка", Toast.LENGTH_LONG, R.style.mytoast2).show()
+                            CarDetailsFragmentDirections.actionConnectMainFR().apply {
+                                findNavController().navigate(this)
+                            }
                         }
+
                     }
                 }
                 else {
-                    showSnack("")
+                    StyleableToast.makeText(requireContext(), "Ошибка", Toast.LENGTH_LONG, R.style.mytoast2).show()
                     CarDetailsFragmentDirections.actionConnectMainFR().apply {
                         findNavController().navigate(this)
                     }
@@ -85,7 +99,8 @@ class CarDetailsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<CarDetailByIin>, t: Throwable) {
-                Log.d("Test", "Error")
+                StyleableToast.makeText(requireContext(), "Проблема с сетью", Toast.LENGTH_LONG, R.style.mytoast2).show()
+                binding.progressBar.visibility = View.GONE
             }
 
         })

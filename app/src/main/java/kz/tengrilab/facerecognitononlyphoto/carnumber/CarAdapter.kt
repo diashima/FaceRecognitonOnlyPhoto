@@ -28,8 +28,8 @@ class CarAdapter(private val items: List<CarDetailByIin.Data.CarInfo>) : Recycle
     }
 
     override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items.get(position))
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items.size
 }

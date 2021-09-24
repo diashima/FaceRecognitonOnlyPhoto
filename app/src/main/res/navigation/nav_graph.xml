@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_connect"
-            app:destination="@+id/mainFragment" />
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -22,19 +22,19 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_connect_imageFr"
-            app:destination="@+id/imageFragment" />
+            app:destination="@id/imageFragment" />
         <action
             android:id="@+id/action_connect_galleryFr"
-            app:destination="@+id/galleryFragment"/>
+            app:destination="@id/galleryFragment"/>
         <action
             android:id="@+id/action_connect_resultsFr"
-            app:destination="@+id/resultFragment"/>
+            app:destination="@id/resultFragment"/>
         <action
             android:id="@+id/action_connect_settingsFr"
-            app:destination="@+id/settingsFragment"/>
+            app:destination="@id/settingsFragment"/>
         <action
             android:id="@+id/action_connect_carnumberFr"
-            app:destination="@+id/carNumberFragment"/>
+            app:destination="@id/carNumberFragment"/>
     </fragment>
 
     <fragment
@@ -44,7 +44,7 @@
         tools:layout="@layout/fragment_image">
         <action
             android:id="@+id/action_connect"
-            app:destination="@+id/mainFragment" />
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -54,7 +54,7 @@
         tools:layout="@layout/fragment_gallery">
         <action
             android:id="@+id/action_connect"
-            app:destination="@+id/mainFragment" />
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -64,10 +64,10 @@
         tools:layout="@layout/fragment_results">
         <action
             android:id="@+id/action_connect_detailsFR"
-            app:destination="@+id/detailsFragment"/>
+            app:destination="@id/detailsFragment"/>
         <action
             android:id="@+id/action_connect_mainFR"
-            app:destination="@+id/mainFragment"/>
+            app:destination="@id/mainFragment"/>
     </fragment>
 
     <fragment
@@ -77,7 +77,10 @@
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_connect_carDetailsFr"
-            app:destination="@+id/carDetailsFragment"/>
+            app:destination="@id/carDetailsFragment"/>
+        <action
+            android:id="@+id/action_connect_mainFR"
+            app:destination="@id/mainFragment"/>
         <argument
             android:name="resultPath"
             app:argType="string"
@@ -107,7 +110,7 @@
         tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_connect_mainFR"
-            app:destination="@+id/mainFragment"/>
+            app:destination="@id/mainFragment"/>
     </fragment>
 
     <fragment
@@ -117,7 +120,10 @@
         tools:layout="@layout/fragment_carnumber">
         <action
             android:id="@+id/action_connect_mainFR"
-            app:destination="@+id/mainFragment"/>
+            app:destination="@id/mainFragment"/>
+        <action
+            android:id="@+id/action_connect_resultCarFr"
+            app:destination="@id/resultCarFragment"/>
     </fragment>
 
     <fragment
@@ -127,10 +133,31 @@
         tools:layout="@layout/fragment_cardetails">
         <action
             android:id="@+id/action_connect_mainFR"
-            app:destination="@+id/mainFragment"/>
+            app:destination="@id/mainFragment"/>
         <argument
             android:name="udNumber"
             app:argType="string"
+            app:nullable="false"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultCarFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.results.car.CarResultsFragment"
+        android:label="fragment_result_car"
+        tools:layout="@layout/fragment_car_results">
+        <action
+            android:id="@+id/action_connect_detailsFromResultsFR"
+            app:destination="@id/detailsFromResultsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFromResultsFragment"
+        android:name="kz.tengrilab.facerecognitononlyphoto.results.car.DetailsFromResultFragment"
+        android:label="fragment_details_from_result"
+        tools:layout="@layout/fragment_details_from_result">
+        <argument
+            android:name="carId"
+            app:argType="integer"
             app:nullable="false"/>
     </fragment>
 </navigation>

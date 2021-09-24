@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
+import io.github.muddz.styleabletoast.StyleableToast
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
+import kz.tengrilab.facerecognitononlyphoto.R
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.Variables.loadCredentials
 import kz.tengrilab.facerecognitononlyphoto.data.Man
@@ -56,21 +58,33 @@ class DetailsFragment : Fragment(), DetailsAdapter.OnItemClickListener {
         val call = detailsInterface.getDetails(header + token, args.resultPath, args.uniqueId, args.faceId, top.toString())
         call.enqueue(object : Callback<List<Man>> {
             override fun onResponse(call: Call<List<Man>>, response: Response<List<Man>>) {
-                Log.d("Test", "TEST: ${response.body()} ")
-                if (response.code() == 200) {
-                    binding.progressBar.visibility = View.GONE
-                    details = response.body()!!
-                    binding.recyclerRecognition.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = DetailsAdapter(details, this@DetailsFragment)
+                Log.d("Test", "TEST: ${response.body()} with code ${response.code()} ")
+                when {
+                    response.code() == 200 -> {
+                        binding.progressBar.visibility = View.GONE
+                        details = response.body()!!
+                        binding.recyclerRecognition.apply {
+                            setHasFixedSize(true)
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = DetailsAdapter(details, this@DetailsFragment)
+                        }
+                    }
+                    response.code() == 404 -> {
+                        binding.progressBar.visibility = View.GONE
+                        StyleableToast.makeText(requireContext(), "Пусто", Toast.LENGTH_LONG, R.style.mytoast2).show()
+                    }
+                    else -> {
+                        StyleableToast.makeText(requireContext(), "Ошибка", Toast.LENGTH_SHORT, R.style.mytoast2).show()
+                        DetailsFragmentDirections.actionConnectMainFR().apply {
+                            findNavController().navigate(this)
+                        }
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<Man>>, t: Throwable) {
-                Log.d("Test", "fail")
-                Toast.makeText(requireContext(), "Соединение разорвано", Toast.LENGTH_LONG).show()
+                StyleableToast.makeText(requireContext(), "Проблемы с сетью", Toast.LENGTH_LONG, R.style.mytoast2).show()
+                binding.progressBar.visibility = View.GONE
             }
         })
     }

@@ -14,7 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
 import kz.tengrilab.facerecognitononlyphoto.Variables
+import kz.tengrilab.facerecognitononlyphoto.data.Auth
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentLoginBinding
+import kz.tengrilab.facerecognitononlyphoto.showSnack
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -49,12 +51,11 @@ class LoginFragment : Fragment() {
                 binding.inputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
         }
 
-
         binding.btnAuth.setOnClickListener {
             val uName = binding.inputUserName.text.toString()
             val uPass = binding.inputPassword.text.toString()
             if (uName == "" || uPass == "")
-                Toast.makeText(requireContext(), "Empty", Toast.LENGTH_LONG).show()
+                showSnack("Заполните поля")
             else {
                 if (binding.checkbox2.isChecked) {
                     saveLogin(true)
@@ -63,7 +64,6 @@ class LoginFragment : Fragment() {
                 }
                 signIn(uName, uPass)
             }
-
         }
     }
 
@@ -72,7 +72,6 @@ class LoginFragment : Fragment() {
         val authInterface = retrofit.create(AuthInterface::class.java)
 
         val deviceId = Variables.getDeviceId(requireContext())
-        Log.d("Test", deviceId)
         val body = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
@@ -80,18 +79,14 @@ class LoginFragment : Fragment() {
             .addFormDataPart("code", deviceId)
             .build()
         val call = authInterface.getUser(body)
-        call.enqueue(object: Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        call.enqueue(object: Callback<Auth> {
+            override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
                 Log.d("Test", response.toString())
                 if (response.code() == 200) {
                     if (response.body() != null) {
-                        val answer = response.body()
-                        val obj = JSONObject(answer!!.string())
-                        val token = obj.getString("token")
-                        val userId = obj.getInt("user_id")
-
+                        val token = response.body()!!.token
+                        val userId = response.body()!!.userId
                         saveCredentials(username, token, userId)
-
                         Snackbar.make(view!!, "Вход выполнен", Snackbar.LENGTH_SHORT).show()
                         LoginFragmentDirections.actionConnect().apply {
                             findNavController().navigate(this)
@@ -103,7 +98,7 @@ class LoginFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<Auth>, t: Throwable) {
                 Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
                 Log.d("Test", t.message!!)
             }

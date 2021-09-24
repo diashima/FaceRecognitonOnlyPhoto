@@ -5,15 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.github.muddz.styleabletoast.StyleableToast
 import kz.tengrilab.facerecognitononlyphoto.ApiClient
 import kz.tengrilab.facerecognitononlyphoto.App
+import kz.tengrilab.facerecognitononlyphoto.R
 import kz.tengrilab.facerecognitononlyphoto.Variables
 import kz.tengrilab.facerecognitononlyphoto.Variables.loadCredentials
 import kz.tengrilab.facerecognitononlyphoto.data.Face
 import kz.tengrilab.facerecognitononlyphoto.databinding.FragmentResultsBinding
+import kz.tengrilab.facerecognitononlyphoto.image.ImageFragmentDirections
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,28 +59,30 @@ class   ResultsFragment : Fragment(), ResultsAdapter.OnItemClickListener {
         call.enqueue(object : Callback<Face> {
             override fun onResponse(call: Call<Face>, response: Response<Face>) {
                 Log.d("Test", response.body().toString())
-                if (response.body() != null) {
-                    binding.progressBar.visibility = View.GONE
-                    key = response.body()!!.results
-                    Log.d("Test", key.toString())
-                    binding.recyclerView.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = ResultsAdapter(key, this@ResultsFragment)
-                    }
-                    /*if (key.size != resultList?.size) {
-                        App.resultList = key
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        binding.progressBar.visibility = View.GONE
+                        key = response.body()!!.results
+                        Log.d("Test", key.toString())
                         binding.recyclerView.apply {
                             setHasFixedSize(true)
                             layoutManager = LinearLayoutManager(context)
                             adapter = ResultsAdapter(key, this@ResultsFragment)
                         }
-                    }*/
+                    }
+                } else if (response.code() == 401) {
+                    ImageFragmentDirections.actionConnect().apply {
+                        findNavController().navigate(this)
+                    }
+                    Toast.makeText(requireContext(), "Зайдите в аккаунт", Toast.LENGTH_SHORT).show()
+                } else if (response.code() == 404) {
+                    binding.progressBar.visibility = View.GONE
+                    StyleableToast.makeText(requireContext(), "Пусто", Toast.LENGTH_LONG, R.style.mytoast2).show()
                 }
             }
 
             override fun onFailure(call: Call<Face>, t: Throwable) {
-                Log.d("Test", "Something went wrong 56")
+                StyleableToast.makeText(requireContext(), "Проблемы с сетью", Toast.LENGTH_LONG, R.style.mytoast2).show()
             }
         })
     }

@@ -14,8 +14,8 @@ android {
         applicationId "kz.tengrilab.facerecognitononlyphoto"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 14
-        versionName "3.2.3"
+        versionCode 17
+        versionName "3.2.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

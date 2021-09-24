@@ -48,4 +48,9 @@
     <string name="clear">Очистить</string>
     <string name="save_login">Сохранить логин</string>
     <string name="make_photo">Сделать фото</string>
+    <string name="choose_car">Нажмите для выбора</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test_number">5</string>
+    <string name="iur_text">Юр. лицо</string>
+    <string name="gallery">Выбрать с галереи</string>
 </resources>

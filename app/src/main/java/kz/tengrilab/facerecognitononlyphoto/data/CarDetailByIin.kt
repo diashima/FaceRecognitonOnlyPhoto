@@ -6,7 +6,7 @@ data class CarDetailByIin(
     val success: Boolean
 ) {
     data class Data(
-        val car_info: List<CarInfo>,
+        val car_info: List<CarInfo>?,
         val firstname: String?,
         val gr_code: String?,
         val id: Int,
@@ -28,9 +28,9 @@ data class CarDetailByIin(
             val teh_passport: String,
             val teh_passport_date: String,
             val vin: String,
-            val vu_end: String,
-            val vu_serial: String,
-            val vu_start: String
+            val vu_end: String?,
+            val vu_serial: String?,
+            val vu_start: String?
         )
     }
 }
