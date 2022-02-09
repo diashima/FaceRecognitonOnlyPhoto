@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.auth.LoginFragment"
+        android:name="kz.tengrilab.fr_cppr.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.main.MainFragment"
+        android:name="kz.tengrilab.fr_cppr.main.MainFragment"
         android:label="fragment_select"
         tools:layout="@layout/fragment_main">
         <action
@@ -35,11 +35,14 @@
         <action
             android:id="@+id/action_connect_carnumberFr"
             app:destination="@id/carNumberFragment"/>
+        <action
+            android:id="@+id/action_logout"
+            app:destination="@id/loginFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.image.ImageFragment"
+        android:name="kz.tengrilab.fr_cppr.image.ImageFragment"
         android:label="fragment_image"
         tools:layout="@layout/fragment_image">
         <action
@@ -49,7 +52,7 @@
 
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.gallery.GalleryFragment"
+        android:name="kz.tengrilab.fr_cppr.gallery.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery">
         <action
@@ -59,7 +62,7 @@
 
     <fragment
         android:id="@+id/resultFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.results.ResultsFragment"
+        android:name="kz.tengrilab.fr_cppr.results.ResultsFragment"
         android:label="fragment_results"
         tools:layout="@layout/fragment_results">
         <action
@@ -72,7 +75,7 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.results.details.DetailsFragment"
+        android:name="kz.tengrilab.fr_cppr.results.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
         <action
@@ -105,7 +108,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.settings.SettingsFragment"
+        android:name="kz.tengrilab.fr_cppr.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -115,7 +118,7 @@
 
     <fragment
         android:id="@+id/carNumberFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.carnumber.CarNumberFragment"
+        android:name="kz.tengrilab.fr_cppr.carnumber.CarNumberFragment"
         android:label="fragment_carnumber"
         tools:layout="@layout/fragment_carnumber">
         <action
@@ -128,7 +131,7 @@
 
     <fragment
         android:id="@+id/carDetailsFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.results.details.CarDetailsFragment"
+        android:name="kz.tengrilab.fr_cppr.results.details.CarDetailsFragment"
         android:label="fragment_cardetails"
         tools:layout="@layout/fragment_cardetails">
         <action
@@ -142,17 +145,20 @@
 
     <fragment
         android:id="@+id/resultCarFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.results.car.CarResultsFragment"
+        android:name="kz.tengrilab.fr_cppr.results.car.CarResultsFragment"
         android:label="fragment_result_car"
         tools:layout="@layout/fragment_car_results">
         <action
             android:id="@+id/action_connect_detailsFromResultsFR"
             app:destination="@id/detailsFromResultsFragment"/>
+        <action
+            android:id="@+id/action_connect_activity"
+            app:destination="@id/detailsActivity"/>
     </fragment>
 
     <fragment
         android:id="@+id/detailsFromResultsFragment"
-        android:name="kz.tengrilab.facerecognitononlyphoto.results.car.DetailsFromResultFragment"
+        android:name="kz.tengrilab.fr_cppr.results.car.DetailsFromResultFragment"
         android:label="fragment_details_from_result"
         tools:layout="@layout/fragment_details_from_result">
         <argument
@@ -160,4 +166,15 @@
             app:argType="integer"
             app:nullable="false"/>
     </fragment>
+
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="kz.tengrilab.fr_cppr.results.car.DetailsFromResultActivity"
+        android:label="activity_details"
+        tools:layout="@layout/activity_details_from_result">
+        <argument
+            android:name="carId"
+            app:argType="integer"
+            app:nullable="false"/>
+    </activity>
 </navigation>

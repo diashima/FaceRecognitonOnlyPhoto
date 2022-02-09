@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/background">
+        android:background="#EEEFEFEF">
 
         <LinearLayout
             android:layout_gravity="center"
@@ -28,14 +28,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/fio"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
             <TextView
                 android:id="@+id/textNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fio"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/iin"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
@@ -51,20 +51,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ud_number"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textVin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
             <TextView
                 android:id="@+id/textTechPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

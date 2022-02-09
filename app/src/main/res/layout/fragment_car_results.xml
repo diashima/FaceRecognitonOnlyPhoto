@@ -3,9 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background2"
+    android:background="#304253"
     tools:context=".results.car.CarResultsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/backText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:textColor="#29A0D8"
+            android:text="@string/back_button"
+            app:layout_constraintBottom_toBottomOf="@+id/backImage"
+            app:layout_constraintStart_toEndOf="@+id/backImage"
+            app:layout_constraintTop_toTopOf="@+id/backImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"

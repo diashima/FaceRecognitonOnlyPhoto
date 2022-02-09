@@ -11,11 +11,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "kz.tengrilab.facerecognitononlyphoto"
+        applicationId "kz.tengrilab.fr_cppr"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 20
-        versionName "3.2.9"
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,5 +71,6 @@ dependencies {
     implementation 'com.google.mlkit:face-detection:16.1.2'
     implementation 'androidx.camera:camera-camera2:1.1.0-alpha08'
 
-    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
+    implementation 'com.google.mlkit:text-recognition:16.0.0-beta1'
+    //implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
 }

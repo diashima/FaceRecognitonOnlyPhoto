@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KÖREGEN</string>
+    <string name="app_name">FR</string>
     <string name="send">Отправить</string>
     <string name="empty_results">Результаты отсутствуют</string>
     <string name="current_ip">Текущий IP-Адрес:</string>
@@ -53,4 +53,18 @@
     <string name="test_number">5</string>
     <string name="iur_text">Юр. лицо</string>
     <string name="gallery">Выбрать с галереи</string>
+    <string name="test_name">Свежинов Виталий Викторович</string>
+    <string name="main_name">FR</string>
+    <string name="info_app">Система распознавания лиц и гос. номеров авто</string>
+    <string name="text_photo">Распознать по фотографии с камеры</string>
+    <string name="text_gallery">Загрузить фотографию с галереи</string>
+    <string name="text_car">Распознать гос. номер автомобиля</string>
+    <string name="text_results">Просмотреть историю поиска лиц</string>
+    <string name="exit">Выйти</string>
+    <string name="test_name_detail">Артемова Марина Николаевна</string>
+    <string name="text_test_iin">ИИН: 92487923742</string>
+    <string name="test_distance">80%</string>
+    <string name="is_have_car_true">Зарегистрирован автомобиль</string>
+    <string name="back_button">Назад</string>
+    <string name="save_pass">Сохранить пароль</string>
 </resources>

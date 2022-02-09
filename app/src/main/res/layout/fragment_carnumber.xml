@@ -2,10 +2,38 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#304253">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/backText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:textColor="#29A0D8"
+            android:text="@string/back_button"
+            app:layout_constraintBottom_toBottomOf="@+id/backImage"
+            app:layout_constraintStart_toEndOf="@+id/backImage"
+            app:layout_constraintTop_toTopOf="@+id/backImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:visibility="gone"
@@ -15,22 +43,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/choose_label"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cropLayout"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_car"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"/>
+        android:orientation="horizontal">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@color/background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arrow_left" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:background="@color/background2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rightButton"
+            app:layout_constraintStart_toEndOf="@+id/leftButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arrow_right" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:text="@string/textCarNumber"
             android:textColor="@color/white"
             android:textSize="23sp" />
@@ -68,7 +123,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="10"
-                android:background="@color/background"
+                android:background="#EEEFEFEF"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
                 android:focusable="true"
                 android:fontFamily="serif"
@@ -76,16 +131,16 @@
                 android:hint="@string/car_number_hint"
                 android:inputType="textCapCharacters"
                 android:maxLength="9"
-                android:textColor="@color/white"
-                android:textColorHint="@color/background2"
+                android:textColor="@color/black"
+                android:textColorHint="#EEA6A8A8"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
         <Button
             android:id="@+id/buttonSearch"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/circle_btn"
@@ -94,8 +149,8 @@
             android:textStyle="normal" />
         <Button
             android:id="@+id/buttonMakePhoto"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/circle_btn"
@@ -104,8 +159,8 @@
             android:textStyle="normal" />
         <Button
             android:id="@+id/buttonGallery"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/circle_btn"
@@ -114,8 +169,8 @@
             android:textStyle="normal" />
         <Button
             android:id="@+id/buttonResults"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/circle_btn"
@@ -126,11 +181,10 @@
 
     <ImageView
         android:visibility="gone"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
+        android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:id="@+id/imagePerson"
         android:src="@drawable/person_icon" />
 

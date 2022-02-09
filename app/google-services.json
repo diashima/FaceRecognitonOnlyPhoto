@@ -1,91 +1,33 @@
 {
   "project_info": {
-    "project_number": "615195072914",
-    "project_id": "fr-final",
-    "storage_bucket": "fr-final.appspot.com"
+    "project_number": "356472205552",
+    "project_id": "fr-cppr",
+    "storage_bucket": "fr-cppr.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615195072914:android:e86cadde783c36b619894b",
+        "mobilesdk_app_id": "1:356472205552:android:1cef3c018984ccd9971235",
         "android_client_info": {
-          "package_name": "com.example.fr_kotlin"
+          "package_name": "kz.tengrilab.fr_cppr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
+          "client_id": "356472205552-t4ih81ec0uj4oae26ecum3u4pjgejlrc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCnscRlYFJ2myBDW1PcR3C8bmowsHHqSEk"
+          "current_key": "AIzaSyAGqdJYZnzFsDfXXSZYliJldQbu9KqavhM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:615195072914:android:cde4c8bd97f1f89c19894b",
-        "android_client_info": {
-          "package_name": "kz.tengrilab.facerecognitononlyphoto"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCnscRlYFJ2myBDW1PcR3C8bmowsHHqSEk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:615195072914:android:f7551e0414ba0c2a19894b",
-        "android_client_info": {
-          "package_name": "kz.tengrilab.frfinal"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCnscRlYFJ2myBDW1PcR3C8bmowsHHqSEk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "615195072914-69p12p0ij7bet4b2gceccv9djd89euie.apps.googleusercontent.com",
+              "client_id": "356472205552-t4ih81ec0uj4oae26ecum3u4pjgejlrc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
